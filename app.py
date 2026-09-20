@@ -17,6 +17,20 @@ def get_student():
         "year": 3,
         "section": "B"
     })
+    
+# New route for skills
+@app.route('/skills')
+def get_skills():
+    return jsonify({
+        "skills": [
+            "Python",
+            "Flask",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Database Management"
+        ]
+    })
 
 
 @app.route('/hello')
