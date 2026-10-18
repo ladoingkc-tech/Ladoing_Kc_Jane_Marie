@@ -1,16 +1,24 @@
-
 import requests
 
-name = input("Enter your first name: ")
+url = "https://ladoing-kc-jane-marie.onrender.com/skills"
 
-url = "https://ladoing-kc-jane-marie.onrender.com/hello"
+try:
+    response = requests.get(url, timeout=30)
 
-params = {"name": name}
-response = requests.get(url, params=params)
+    if response.status_code == 200:
+        data = response.json()
 
-if response.status_code == 200:
-    data = response.json()
-    print(data["message"])
-else:
-    print("Request failed.")
-    print("Status Code:", response.status_code)
+        print("Classmate API Response:")
+
+        if isinstance(data, dict):
+            for key, value in data.items():
+                print(f"{key}: {value}")
+        else:
+            print(data)
+
+    else:
+        print("Request failed.")
+        print("Status Code:", response.status_code)
+
+except requests.exceptions.RequestException as e:
+    print("Connection error:", e)
