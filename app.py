@@ -3,16 +3,20 @@ from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
+
+# Home Page
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# API Endpoint
 @app.route("/api")
 def api():
     return "Welcome to my first API!"
 
 
+# Student Information Endpoint
 @app.route("/student")
 def student():
     return jsonify({
@@ -24,13 +28,16 @@ def student():
     })
 
 
+# Greeting Endpoint
 @app.route("/hello")
 def hello():
     name = request.args.get("name", "student")
-    return jsonify({"message": f"hello {name}"})
+    return jsonify({
+        "message": f"hello {name}"
+    })
 
 
-# New Course API Endpoint
+# Course Information Endpoint
 @app.route("/course")
 def course():
     return jsonify({
@@ -38,7 +45,10 @@ def course():
         "program": "BSIT",
         "year": 3,
         "section": "B",
-        "description": "A program focused on information technology, programming, and computer systems."
+        "description": (
+            "A program focused on information technology, "
+            "programming, and computer systems."
+        )
     })
 
 

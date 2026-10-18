@@ -31,7 +31,7 @@
         }
 
         .card {
-            background-color: #ffffff;
+            background-color: white;
             padding: 25px;
             margin-top: 22px;
             border-radius: 15px;
@@ -52,14 +52,13 @@
         button {
             background-color: #ec6f9e;
             color: white;
-            border: none;
+            border: 2px solid #222;
             padding: 12px 18px;
-            border-radius: 8px;
+            border-radius: 9px;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
             transition: 0.3s;
-            margin-top: 5px;
         }
 
         button:hover {
@@ -85,20 +84,12 @@
             box-shadow: 0 0 0 3px #ffe0eb;
         }
 
-        input::placeholder {
-            color: #c18b9e;
-        }
-
         .result {
             margin-top: 18px;
-        }
-
-        .student-info,
-        .api-result {
-            background-color: #fff0f6;
             padding: 15px;
             border-radius: 10px;
             border: 1px solid #ffd6e5;
+            background-color: #fff0f6;
             overflow-wrap: anywhere;
         }
 
@@ -113,7 +104,6 @@
         }
 
         #greeting {
-            margin-top: 15px;
             color: #d63375;
             font-weight: bold;
             overflow-wrap: anywhere;
@@ -147,207 +137,233 @@
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
 
-        <h1>🎀 Student API Interface 🎀</h1>
+    <h1>🎀 Student API Interface 🎀</h1>
 
-        <!-- 1. Student Information -->
-        <div class="card">
-            <h2>🌸 Student Information</h2>
-            <p>Click the button below to view student details.</p>
+    <!-- Student Information -->
+    <div class="card">
+        <h2>🌸 Student Information</h2>
+        <p>Click the button below to view student details.</p>
 
-            <button onclick="loadStudent()">
-                Load Student Information
-            </button>
+        <button onclick="loadStudent()">
+            Load Student Information
+        </button>
 
-            <div id="result" class="result"></div>
+        <div id="result" class="result">
+            Student information will appear here.
         </div>
-
-        <!-- 2. Greeting API -->
-        <div class="card">
-            <h2>💗 Greeting API</h2>
-            <p>Enter your first name to receive a sweet greeting!</p>
-
-            <input
-                type="text"
-                id="nameInput"
-                placeholder="Enter your first name"
-                maxlength="100"
-            >
-
-            <button onclick="sayHello()">Say Hello 💕</button>
-
-            <p id="greeting"></p>
-        </div>
-
-        <!-- 3. /api Endpoint -->
-        <div class="card">
-            <h2>✨ Custom API Endpoint</h2>
-            <p>
-                Click the button to retrieve the response
-                from your custom <code>/api</code> endpoint.
-            </p>
-
-            <button onclick="loadAPI()">Load API Message</button>
-
-            <div id="apiResult" class="result api-result">
-                Your API message will appear here.
-            </div>
-        </div>
-
-        <!-- 4. /course Endpoint -->
-        <div class="card">
-            <h2>📚 Course Information</h2>
-            <p>
-                Click the button to retrieve your course data
-                from the <code>/course</code> endpoint.
-            </p>
-
-            <button onclick="loadCourse()">Load Course Information</button>
-
-            <div id="courseResult" class="result api-result">
-                Your course information will appear here.
-            </div>
-        </div>
-
-        <div class="footer">
-            ♡ Student API Interface | Made with love ♡
-        </div>
-
     </div>
 
-    <script>
-        // Helper: fetch data and check for errors
-        async function fetchResponse(url) {
-            const response = await fetch(url);
+    <!-- Greeting API -->
+    <div class="card">
+        <h2>💗 Greeting API</h2>
+        <p>Enter your first name to receive a greeting!</p>
+
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your first name"
+            maxlength="100"
+        >
+
+        <button onclick="sayHello()">Say Hello 💕</button>
+
+        <p id="greeting"></p>
+    </div>
+
+    <!-- /api Endpoint -->
+    <div class="card">
+        <h2>✨ Custom API Endpoint</h2>
+        <p>
+            Click the button to retrieve the response from
+            your <code>/api</code> endpoint.
+        </p>
+
+        <button onclick="loadAPI()">Load API Message</button>
+
+        <div id="apiResult" class="result">
+            Your API message will appear here.
+        </div>
+    </div>
+
+    <!-- /course Endpoint -->
+    <div class="card">
+        <h2>📚 Course Information</h2>
+        <p>
+            Click the button to retrieve your course data
+            from the <code>/course</code> endpoint.
+        </p>
+
+        <button onclick="loadCourse()">Load Course Information</button>
+
+        <div id="courseResult" class="result">
+            Your course information will appear here.
+        </div>
+    </div>
+
+    <div class="footer">
+        ♡ Student API Interface | Made with love ♡
+    </div>
+
+</div>
+
+<script>
+    // Load Student Information
+    async function loadStudent() {
+        const output = document.getElementById("result");
+        output.textContent = "Loading student information...";
+
+        try {
+            const response = await fetch("/student");
 
             if (!response.ok) {
-                throw new Error("HTTP error: " + response.status);
+                throw new Error("HTTP " + response.status);
             }
 
-            return response;
-        }
+            const data = await response.json();
 
-        // 1. Load Student Information
-        async function loadStudent() {
-            const result = document.getElementById("result");
-            result.textContent = "Loading student information...";
+            output.replaceChildren();
 
-            try {
-                const response = await fetchResponse("/student");
-                const data = await response.json();
+            const info = document.createElement("div");
+            info.className = "student-info";
 
-                result.replaceChildren();
+            const fields = [
+                ["Student ID", data.id ?? data.student_id],
+                ["Name", data.name],
+                ["Program", data.program],
+                ["Year", data.year],
+                ["Section", data.section]
+            ];
 
-                const info = document.createElement("div");
-                info.className = "student-info";
+            fields.forEach(([label, value]) => {
+                const p = document.createElement("p");
+                const bold = document.createElement("strong");
 
-                const fields = [
-                    ["Student ID", data.student_id ?? data.id],
-                    ["Name", data.name],
-                    ["Program", data.program],
-                    ["Year", data.year],
-                    ["Section", data.section]
-                ];
-
-                fields.forEach(([label, value]) => {
-                    const p = document.createElement("p");
-                    const b = document.createElement("b");
-
-                    b.textContent = label + ": ";
-                    p.appendChild(b);
-                    p.appendChild(
-                        document.createTextNode(
-                            value == null ? "" : String(value)
-                        )
-                    );
-
-                    info.appendChild(p);
-                });
-
-                result.appendChild(info);
-
-            } catch (error) {
-                result.textContent =
-                    "Unable to retrieve student data. Please try again.";
-            }
-        }
-
-        // 2. Greeting API
-        async function sayHello() {
-            const name = document.getElementById("nameInput").value.trim();
-            const greeting = document.getElementById("greeting");
-
-            if (!name) {
-                greeting.style.color = "#d63333";
-                greeting.textContent = "Please enter your first name. 💕";
-                return;
-            }
-
-            greeting.textContent = "Loading greeting...";
-
-            try {
-                const response = await fetchResponse(
-                    "/hello?name=" + encodeURIComponent(name)
+                bold.textContent = label + ": ";
+                p.appendChild(bold);
+                p.appendChild(
+                    document.createTextNode(
+                        value == null ? "" : String(value)
+                    )
                 );
 
-                const data = await response.json();
+                info.appendChild(p);
+            });
 
-                greeting.style.color = "#d63375";
-                greeting.textContent = data.message;
+            output.appendChild(info);
 
-            } catch (error) {
-                greeting.style.color = "#d63333";
-                greeting.textContent =
-                    "Unable to retrieve greeting. Please try again.";
-            }
+        } catch (error) {
+            console.error("Student API error:", error);
+            output.textContent =
+                "Unable to retrieve student information: " + error.message;
+        }
+    }
+
+    // Greeting API
+    async function sayHello() {
+        const name = document.getElementById("nameInput").value.trim();
+        const output = document.getElementById("greeting");
+
+        if (!name) {
+            output.textContent = "Please enter your first name. 💕";
+            return;
         }
 
-        // 3. Custom /api Endpoint
-        async function loadAPI() {
-            const output = document.getElementById("apiResult");
-            output.textContent = "Loading API message...";
+        output.textContent = "Loading greeting...";
 
-            try {
-                const response = await fetchResponse("/api");
-                const data = await response.text();
+        try {
+            const response = await fetch(
+                "/hello?name=" + encodeURIComponent(name)
+            );
 
-                // Supports plain text or JSON responses
-                try {
-                    const json = JSON.parse(data);
-                    output.textContent = JSON.stringify(json, null, 2);
-                } catch {
-                    output.textContent = data;
-                }
-
-            } catch (error) {
-                output.textContent =
-                    "Unable to retrieve the API message. Check your Flask server.";
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
             }
+
+            const data = await response.json();
+            output.textContent = data.message;
+
+        } catch (error) {
+            console.error("Greeting API error:", error);
+            output.textContent =
+                "Unable to retrieve greeting: " + error.message;
         }
+    }
 
-        // 4. Custom /course Endpoint
-        async function loadCourse() {
-            const output = document.getElementById("courseResult");
-            output.textContent = "Loading course information...";
+    // Custom /api Endpoint
+    async function loadAPI() {
+        const output = document.getElementById("apiResult");
+        output.textContent = "Loading API message...";
 
-            try {
-                const response = await fetchResponse("/skills");
-                const data = await response.text();
+        try {
+            const response = await fetch("/api");
 
-                // Supports plain text or JSON responses
-                try {
-                    const json = JSON.parse(data);
-                    output.textContent = JSON.stringify(json, null, 2);
-                } catch {
-                    output.textContent = data;
-                }
-
-            } catch (error) {
-                output.textContent =
-                    "Unable to retrieve course information. Check your Flask server.";
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
             }
+
+            const data = await response.text();
+            output.textContent = data;
+
+        } catch (error) {
+            console.error("API error:", error);
+            output.textContent =
+                "Unable to retrieve API message: " + error.message;
         }
-    </script>
+    }
+
+    // Course Information Endpoint
+    async function loadCourse() {
+        const output = document.getElementById("courseResult");
+        output.textContent = "Loading course information...";
+
+        try {
+            const response = await fetch("/course");
+
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
+            }
+
+            const data = await response.json();
+
+            output.replaceChildren();
+
+            const info = document.createElement("div");
+            info.className = "student-info";
+
+            const fields = [
+                ["Course", data.course],
+                ["Program", data.program],
+                ["Year", data.year],
+                ["Section", data.section],
+                ["Description", data.description]
+            ];
+
+            fields.forEach(([label, value]) => {
+                const p = document.createElement("p");
+                const bold = document.createElement("strong");
+
+                bold.textContent = label + ": ";
+                p.appendChild(bold);
+                p.appendChild(
+                    document.createTextNode(
+                        value == null ? "" : String(value)
+                    )
+                );
+
+                info.appendChild(p);
+            });
+
+            output.appendChild(info);
+
+        } catch (error) {
+            console.error("Course API error:", error);
+            output.textContent =
+                "Unable to retrieve course information: " + error.message;
+        }
+    }
+</script>
+
 </body>
 </html>
