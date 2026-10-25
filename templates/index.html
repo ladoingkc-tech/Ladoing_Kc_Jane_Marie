@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px;
             margin: 30px auto;
         }
 
@@ -52,10 +52,10 @@
             background-color: #ec6f9e;
             color: white;
             border: 2px solid #222;
-            padding: 12px 18px;
-            border-radius: 9px;
+            padding: 8px 12px;
+            border-radius: 7px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             transition: 0.3s;
         }
@@ -63,6 +63,22 @@
         button:hover {
             background-color: #d94f83;
             transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #ff6b8b;
+        }
+
+        .btn-danger:hover {
+            background-color: #e0486c;
+        }
+
+        .btn-secondary {
+            background-color: #b87994;
+        }
+
+        .btn-secondary:hover {
+            background-color: #9c5f7c;
         }
 
         input {
@@ -89,7 +105,7 @@
             border-radius: 10px;
             border: 1px solid #ffd6e5;
             background-color: #fff0f6;
-            overflow-wrap: anywhere;
+            overflow-x: auto;
         }
 
         .student-info p {
@@ -100,6 +116,30 @@
 
         .student-info p:last-child {
             border-bottom: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            white-space: nowrap;
+        }
+
+        th, td {
+            border: 1px solid #f4b6cc;
+            padding: 10px 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #ffe0eb;
+            color: #5c3545;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 5px;
         }
 
         #greeting {
@@ -115,19 +155,69 @@
             font-size: 13px;
         }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 23px;
-            }
+        /* Toast Notifications Styling */
+        #notificationContainer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-            .card {
-                padding: 18px;
+        .toast {
+            min-width: 250px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .toast.success {
+            background-color: #2e7d32;
+            border-left: 6px solid #1b5e20;
+        }
+
+        .toast.error {
+            background-color: #d32f2f;
+            border-left: 6px solid #b71c1c;
+        }
+
+        .toast.info {
+            background-color: #e75480;
+            border-left: 6px solid #b8325a;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
             }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 23px; }
+            .card { padding: 18px; }
         }
     </style>
 </head>
 
 <body>
+
+<!-- Toast Notification Area -->
+<div id="notificationContainer"></div>
+
 <div class="container">
 
     <h1>🎀 Student API Interface 🎀</h1>
@@ -136,11 +226,7 @@
     <div class="card">
         <h2>🌸 Student Information</h2>
         <p>Click the button below to view student details.</p>
-
-        <button onclick="loadStudent()">
-            Load Student Information
-        </button>
-
+        <button onclick="loadStudent()">Load Student Information</button>
         <div id="result" class="result">
             Student information will appear here.
         </div>
@@ -150,29 +236,16 @@
     <div class="card">
         <h2>💗 Greeting API</h2>
         <p>Enter your first name to receive a greeting!</p>
-
-        <input
-            type="text"
-            id="nameInput"
-            placeholder="Enter your first name"
-            maxlength="100"
-        >
-
+        <input type="text" id="nameInput" placeholder="Enter your first name" maxlength="100">
         <button onclick="sayHello()">Say Hello 💕</button>
-
         <p id="greeting"></p>
     </div>
 
     <!-- Custom API Endpoint -->
     <div class="card">
         <h2>✨ Custom API Endpoint</h2>
-        <p>
-            Click the button to retrieve the response from
-            your <code>/api</code> endpoint.
-        </p>
-
+        <p>Click the button to retrieve the response from your <code>/api</code> endpoint.</p>
         <button onclick="loadAPI()">Load API Message</button>
-
         <div id="apiResult" class="result">
             Your API message will appear here.
         </div>
@@ -181,31 +254,64 @@
     <!-- Course Information -->
     <div class="card">
         <h2>📚 Course Information</h2>
-        <p>
-            Click the button to retrieve your course data
-            from the <code>/course</code> endpoint.
-        </p>
-
+        <p>Click the button to retrieve your course data from the <code>/course</code> endpoint.</p>
         <button onclick="loadCourse()">Load Course Information</button>
-
         <div id="courseResult" class="result">
             Your course information will appear here.
         </div>
     </div>
 
-    <!-- Students from Database -->
+    <!-- Students CRUD Dashboard -->
     <div class="card">
-        <h2>🗂️ Students from Database</h2>
+        <h2>🗂️ Student CRUD Management</h2>
+        <p>Add, edit, or delete student records in your SQLite database.</p>
 
-        <p>
-            Click the button below to retrieve student records
-            from your SQLite database.
-        </p>
+        <!-- Form for Add/Edit -->
+        <form id="studentForm">
+            <input type="hidden" id="internalId">
+            
+            <label><strong>Student ID:</strong></label>
+            <input type="text" id="student_id" placeholder="e.g. 24-0087" required>
+            
+            <label><strong>Name:</strong></label>
+            <input type="text" id="name" placeholder="Full Name" required>
+            
+            <label><strong>Program:</strong></label>
+            <input type="text" id="program" placeholder="e.g. BSIT" required>
+            
+            <label><strong>Year:</strong></label>
+            <input type="number" id="year" placeholder="e.g. 3" required>
+            
+            <label><strong>Section:</strong></label>
+            <input type="text" id="section" placeholder="e.g. B" required>
+            
+            <button type="submit" id="saveBtn">Add Student</button>
+            <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+        </form>
 
-        <button onclick="loadStudents()">Load Students</button>
+        <div style="margin-top: 20px;">
+            <button onclick="loadStudents()">Refresh Student Records</button>
+        </div>
 
-        <div id="studentList" class="result">
-            Student records will appear here.
+        <div class="result" id="tableContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DB ID</th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Section</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Click "Refresh Student Records" to load data.</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -216,22 +322,43 @@
 </div>
 
 <script>
-    // Load Student Information
+    document.addEventListener("DOMContentLoaded", loadStudents);
+
+    const form = document.getElementById("studentForm");
+    const tableBody = document.getElementById("studentTableBody");
+
+    // Toast Notification helper function
+    function showNotification(message, type = "info") {
+        const container = document.getElementById("notificationContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            toast.style.transform = "translateX(100%)";
+            toast.style.transition = "all 0.3s ease-in";
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Helper to scroll to the Student Records table smoothly
+    function scrollToTable() {
+        const tableContainer = document.getElementById("tableContainer");
+        tableContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     async function loadStudent() {
         const output = document.getElementById("result");
         output.textContent = "Loading student information...";
-
         try {
             const response = await fetch("/student");
-
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
-
+            if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
 
             output.replaceChildren();
-
             const info = document.createElement("div");
             info.className = "student-info";
 
@@ -246,28 +373,19 @@
             fields.forEach(([label, value]) => {
                 const p = document.createElement("p");
                 const bold = document.createElement("strong");
-
                 bold.textContent = label + ": ";
                 p.appendChild(bold);
-                p.appendChild(
-                    document.createTextNode(
-                        value == null ? "" : String(value)
-                    )
-                );
-
+                p.appendChild(document.createTextNode(value == null ? "" : String(value)));
                 info.appendChild(p);
             });
 
             output.appendChild(info);
-
         } catch (error) {
             console.error("Student API error:", error);
-            output.textContent =
-                "Unable to retrieve student information: " + error.message;
+            output.textContent = "Unable to retrieve student information: " + error.message;
         }
     }
 
-    // Greeting API
     async function sayHello() {
         const name = document.getElementById("nameInput").value.trim();
         const output = document.getElementById("greeting");
@@ -278,64 +396,40 @@
         }
 
         output.textContent = "Loading greeting...";
-
         try {
-            const response = await fetch(
-                "/hello?name=" + encodeURIComponent(name)
-            );
-
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
-
+            const response = await fetch("/hello?name=" + encodeURIComponent(name));
+            if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
             output.textContent = data.message;
-
         } catch (error) {
             console.error("Greeting API error:", error);
-            output.textContent =
-                "Unable to retrieve greeting: " + error.message;
+            output.textContent = "Unable to retrieve greeting: " + error.message;
         }
     }
 
-    // Custom /api Endpoint
     async function loadAPI() {
         const output = document.getElementById("apiResult");
         output.textContent = "Loading API message...";
-
         try {
             const response = await fetch("/api");
-
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
-
+            if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.text();
             output.textContent = data;
-
         } catch (error) {
             console.error("API error:", error);
-            output.textContent =
-                "Unable to retrieve API message: " + error.message;
+            output.textContent = "Unable to retrieve API message: " + error.message;
         }
     }
 
-    // Course Information Endpoint
     async function loadCourse() {
         const output = document.getElementById("courseResult");
         output.textContent = "Loading course information...";
-
         try {
             const response = await fetch("/course");
-
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
-
+            if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
 
             output.replaceChildren();
-
             const info = document.createElement("div");
             info.className = "student-info";
 
@@ -350,87 +444,140 @@
             fields.forEach(([label, value]) => {
                 const p = document.createElement("p");
                 const bold = document.createElement("strong");
-
                 bold.textContent = label + ": ";
                 p.appendChild(bold);
-                p.appendChild(
-                    document.createTextNode(
-                        value == null ? "" : String(value)
-                    )
-                );
-
+                p.appendChild(document.createTextNode(value == null ? "" : String(value)));
                 info.appendChild(p);
             });
 
             output.appendChild(info);
-
         } catch (error) {
             console.error("Course API error:", error);
-            output.textContent =
-                "Unable to retrieve course information: " + error.message;
+            output.textContent = "Unable to retrieve course information: " + error.message;
         }
     }
 
-    // Load Students from SQLite Database
     async function loadStudents() {
-        const output = document.getElementById("studentList");
-        output.textContent = "Loading student records...";
-
         try {
-            const response = await fetch("/students");
-
-            if (!response.ok) {
-                throw new Error("Failed to retrieve students");
-            }
-
+            const response = await fetch("/api/students");
+            if (!response.ok) throw new Error("Failed to retrieve students");
             const data = await response.json();
 
-            output.replaceChildren();
-
-            if (!Array.isArray(data)) {
-                throw new Error(
-                    data.error || "Invalid student data received"
-                );
-            }
+            tableBody.replaceChildren();
 
             if (data.length === 0) {
-                output.textContent = "No student records found.";
+                let row = document.createElement("tr");
+                row.innerHTML = `<td colspan="7" style="text-align: center;">No student records found.</td>`;
+                tableBody.appendChild(row);
                 return;
             }
 
-            const info = document.createElement("div");
-            info.className = "student-info";
-
             data.forEach(student => {
-                const p = document.createElement("p");
-                const bold = document.createElement("strong");
-
-                bold.textContent = student.student_id || "No Student ID";
-                p.appendChild(bold);
-
-                p.appendChild(
-                    document.createTextNode(
-                        " - " +
-                        (student.name || "") +
-                        " | " +
-                        (student.program || "") +
-                        " | Year " +
-                        (student.year ?? "") +
-                        " | Section " +
-                        (student.section || "")
-                    )
-                );
-
-                info.appendChild(p);
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.student_id || ""}</td>
+                    <td>${student.name || ""}</td>
+                    <td>${student.program || ""}</td>
+                    <td>${student.year ?? ""}</td>
+                    <td>${student.section || ""}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button onclick="editStudent(${student.id}, '${student.student_id || ""}', '${(student.name || "").replace(/'/g, "\\\\'")}', '${student.program || ""}', ${student.year || 0}, '${student.section || ""}')">Edit</button>
+                            <button class="btn-danger" onclick="deleteStudent(${student.id})">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
             });
-
-            output.appendChild(info);
-
         } catch (error) {
             console.error("Load students error:", error);
-            output.textContent =
-                "Unable to retrieve student records. Please check your database and Flask server.";
+            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #e75480;">Unable to retrieve student records.</td></tr>`;
         }
+    }
+
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const internalId = document.getElementById("internalId").value;
+        const isUpdate = Boolean(internalId);
+        
+        const studentData = {
+            student_id: document.getElementById("student_id").value,
+            name: document.getElementById("name").value,
+            program: document.getElementById("program").value,
+            year: parseInt(document.getElementById("year").value),
+            section: document.getElementById("section").value
+        };
+
+        const url = isUpdate ? `/api/students/${internalId}` : '/api/students';
+        const method = isUpdate ? 'PUT' : 'POST';
+
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(studentData)
+            });
+
+            if (!response.ok) throw new Error("Operation failed");
+
+            const result = await response.json();
+            
+            // Show toast message
+            showNotification(result.message || (isUpdate ? "Student updated successfully!" : "Student added successfully!"), "success");
+
+            resetForm();
+            await loadStudents();
+
+            // Smooth navigate/scroll to refreshed records table
+            scrollToTable();
+        } catch (error) {
+            console.error("Save error:", error);
+            showNotification("Error saving student record.", "error");
+        }
+    });
+
+    function editStudent(id, student_id, name, program, year, section) {
+        document.getElementById("internalId").value = id;
+        document.getElementById("student_id").value = student_id;
+        document.getElementById("name").value = name;
+        document.getElementById("program").value = program;
+        document.getElementById("year").value = year;
+        document.getElementById("section").value = section;
+        document.getElementById("saveBtn").innerText = "Update Student";
+        
+        showNotification(`Editing record DB ID: ${id}`, "info");
+        window.scrollTo({ top: form.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    async function deleteStudent(id) {
+        if (confirm("Are you sure you want to delete this student record?")) {
+            try {
+                const response = await fetch(`/api/students/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) throw new Error("Delete failed");
+
+                const result = await response.json();
+                
+                // Show delete notification
+                showNotification(result.message || "Student record deleted successfully!", "success");
+                
+                await loadStudents();
+                scrollToTable();
+            } catch (error) {
+                console.error("Delete error:", error);
+                showNotification("Error deleting student record.", "error");
+            }
+        }
+    }
+
+    function resetForm() {
+        form.reset();
+        document.getElementById("internalId").value = "";
+        document.getElementById("saveBtn").innerText = "Add Student";
     }
 </script>
 
