@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,14 +108,6 @@
             overflow-wrap: anywhere;
         }
 
-        pre {
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-        }
-
         .footer {
             text-align: center;
             margin-top: 25px;
@@ -172,7 +163,7 @@
         <p id="greeting"></p>
     </div>
 
-    <!-- /api Endpoint -->
+    <!-- Custom API Endpoint -->
     <div class="card">
         <h2>✨ Custom API Endpoint</h2>
         <p>
@@ -187,7 +178,7 @@
         </div>
     </div>
 
-    <!-- /course Endpoint -->
+    <!-- Course Information -->
     <div class="card">
         <h2>📚 Course Information</h2>
         <p>
@@ -199,6 +190,22 @@
 
         <div id="courseResult" class="result">
             Your course information will appear here.
+        </div>
+    </div>
+
+    <!-- Students from Database -->
+    <div class="card">
+        <h2>🗂️ Students from Database</h2>
+
+        <p>
+            Click the button below to retrieve student records
+            from your SQLite database.
+        </p>
+
+        <button onclick="loadStudents()">Load Students</button>
+
+        <div id="studentList" class="result">
+            Student records will appear here.
         </div>
     </div>
 
@@ -361,6 +368,68 @@
             console.error("Course API error:", error);
             output.textContent =
                 "Unable to retrieve course information: " + error.message;
+        }
+    }
+
+    // Load Students from SQLite Database
+    async function loadStudents() {
+        const output = document.getElementById("studentList");
+        output.textContent = "Loading student records...";
+
+        try {
+            const response = await fetch("/students");
+
+            if (!response.ok) {
+                throw new Error("Failed to retrieve students");
+            }
+
+            const data = await response.json();
+
+            output.replaceChildren();
+
+            if (!Array.isArray(data)) {
+                throw new Error(
+                    data.error || "Invalid student data received"
+                );
+            }
+
+            if (data.length === 0) {
+                output.textContent = "No student records found.";
+                return;
+            }
+
+            const info = document.createElement("div");
+            info.className = "student-info";
+
+            data.forEach(student => {
+                const p = document.createElement("p");
+                const bold = document.createElement("strong");
+
+                bold.textContent = student.student_id || "No Student ID";
+                p.appendChild(bold);
+
+                p.appendChild(
+                    document.createTextNode(
+                        " - " +
+                        (student.name || "") +
+                        " | " +
+                        (student.program || "") +
+                        " | Year " +
+                        (student.year ?? "") +
+                        " | Section " +
+                        (student.section || "")
+                    )
+                );
+
+                info.appendChild(p);
+            });
+
+            output.appendChild(info);
+
+        } catch (error) {
+            console.error("Load students error:", error);
+            output.textContent =
+                "Unable to retrieve student records. Please check your database and Flask server.";
         }
     }
 </script>

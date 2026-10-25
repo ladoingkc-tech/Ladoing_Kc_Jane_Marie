@@ -1,7 +1,14 @@
-
+import sqlite3
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
+
+
+# Database Connection
+def get_db_connection():
+    conn = sqlite3.connect("students.db")
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
 # Home Page
@@ -32,6 +39,7 @@ def student():
 @app.route("/hello")
 def hello():
     name = request.args.get("name", "student")
+
     return jsonify({
         "message": f"hello {name}"
     })
@@ -52,5 +60,54 @@ def course():
     })
 
 
+# Get All Students
+@app.route("/students")
+def students():
+    conn = get_db_connection()
+
+    try:
+        students_data = conn.execute(
+            "SELECT * FROM students"
+        ).fetchall()
+
+        students_list = [
+            dict(student) for student in students_data
+        ]
+
+        return jsonify(students_list)
+
+    except sqlite3.Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
+
+
+# Get Student by ID
+@app.route("/students/<int:id>")
+def get_student_by_id(id):
+    conn = get_db_connection()
+
+    try:
+        student = conn.execute(
+            "SELECT * FROM students WHERE id = ?",
+            (id,)
+        ).fetchone()
+
+        if student is None:
+            return jsonify({
+                "error": "Student not found"
+            }), 404
+
+        return jsonify(dict(student))
+
+    except sqlite3.Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        conn.close()
+
+
+# Run Flask Application
 if __name__ == "__main__":
     app.run(debug=True)
