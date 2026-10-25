@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student API Interface</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,12 +12,10 @@
             padding: 30px 15px;
             color: #5c3545;
         }
-
         .container {
             max-width: 900px;
             margin: 30px auto;
         }
-
         h1 {
             text-align: center;
             color: white;
@@ -28,7 +25,6 @@
             font-size: 27px;
             box-shadow: 0 4px 10px rgba(230, 100, 150, 0.2);
         }
-
         .card {
             background-color: white;
             padding: 25px;
@@ -37,17 +33,14 @@
             border: 1px solid #ffd6e5;
             box-shadow: 0 4px 12px rgba(230, 100, 150, 0.12);
         }
-
         h2 {
             color: #e75480;
             margin-top: 0;
             font-size: 21px;
         }
-
         p {
             line-height: 1.6;
         }
-
         button {
             background-color: #ec6f9e;
             color: white;
@@ -59,28 +52,22 @@
             font-weight: bold;
             transition: 0.3s;
         }
-
         button:hover {
             background-color: #d94f83;
             transform: translateY(-2px);
         }
-
         .btn-danger {
             background-color: #ff6b8b;
         }
-
         .btn-danger:hover {
             background-color: #e0486c;
         }
-
         .btn-secondary {
             background-color: #b87994;
         }
-
         .btn-secondary:hover {
             background-color: #9c5f7c;
         }
-
         input {
             width: 100%;
             padding: 12px;
@@ -92,13 +79,11 @@
             background-color: #fffafd;
             color: #5c3545;
         }
-
         input:focus {
             outline: none;
             border-color: #ec6f9e;
             box-shadow: 0 0 0 3px #ffe0eb;
         }
-
         .result {
             margin-top: 18px;
             padding: 15px;
@@ -107,54 +92,45 @@
             background-color: #fff0f6;
             overflow-x: auto;
         }
-
         .student-info p {
             padding: 9px 0;
             margin: 0;
             border-bottom: 1px solid #f8d5e2;
         }
-
         .student-info p:last-child {
             border-bottom: none;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
             white-space: nowrap;
         }
-
         th, td {
             border: 1px solid #f4b6cc;
             padding: 10px 12px;
             text-align: left;
             font-size: 13px;
         }
-
         th {
             background-color: #ffe0eb;
             color: #5c3545;
         }
-
         .action-btns {
             display: flex;
             gap: 5px;
         }
-
         #greeting {
             color: #d63375;
             font-weight: bold;
             overflow-wrap: anywhere;
         }
-
         .footer {
             text-align: center;
             margin-top: 25px;
             color: #b87994;
             font-size: 13px;
         }
-
         /* Toast Notifications Styling */
         #notificationContainer {
             position: fixed;
@@ -165,7 +141,6 @@
             flex-direction: column;
             gap: 10px;
         }
-
         .toast {
             min-width: 250px;
             padding: 14px 20px;
@@ -179,22 +154,18 @@
             justify-content: space-between;
             animation: slideIn 0.3s ease-out forwards;
         }
-
         .toast.success {
             background-color: #2e7d32;
             border-left: 6px solid #1b5e20;
         }
-
         .toast.error {
             background-color: #d32f2f;
             border-left: 6px solid #b71c1c;
         }
-
         .toast.info {
             background-color: #e75480;
             border-left: 6px solid #b8325a;
         }
-
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -205,23 +176,18 @@
                 opacity: 1;
             }
         }
-
         @media (max-width: 480px) {
             h1 { font-size: 23px; }
             .card { padding: 18px; }
         }
     </style>
 </head>
-
 <body>
-
 <!-- Toast Notification Area -->
 <div id="notificationContainer"></div>
-
 <div class="container">
-
     <h1>🎀 Student API Interface 🎀</h1>
-
+    
     <!-- Student Information -->
     <div class="card">
         <h2>🌸 Student Information</h2>
@@ -265,7 +231,6 @@
     <div class="card">
         <h2>🗂️ Student CRUD Management</h2>
         <p>Add, edit, or delete student records in your SQLite database.</p>
-
         <!-- Form for Add/Edit -->
         <form id="studentForm">
             <input type="hidden" id="internalId">
@@ -288,11 +253,9 @@
             <button type="submit" id="saveBtn">Add Student</button>
             <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
         </form>
-
         <div style="margin-top: 20px;">
             <button onclick="loadStudents()">Refresh Student Records</button>
         </div>
-
         <div class="result" id="tableContainer">
             <table>
                 <thead>
@@ -315,17 +278,49 @@
         </div>
     </div>
 
+    <!-- Classmate's Records Section -->
+    <div class="card">
+        <h2>🌐 Classmate's Records</h2>
+        <p>View student records retrieved directly from your partner's deployed API endpoint.</p>
+        
+        <div style="margin-top: 10px;">
+            <button onclick="loadClassmateRecords()">Load Classmate's Records</button>
+        </div>
+        <div class="result">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Year</th>
+                        <th>Section</th>
+                    </tr>
+                </thead>
+                <tbody id="classmateTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Click "Load Classmate's Records" to load data.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="footer">
         ♡ Student API Interface | Made with love ♡
     </div>
-
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", loadStudents);
+    document.addEventListener("DOMContentLoaded", () => {
+        loadStudents();
+        loadClassmateRecords(); // Automatically trigger classmate API load on start
+    });
 
     const form = document.getElementById("studentForm");
     const tableBody = document.getElementById("studentTableBody");
+    const classmateTableBody = document.getElementById("classmateTableBody");
 
     // Toast Notification helper function
     function showNotification(message, type = "info") {
@@ -333,9 +328,7 @@
         const toast = document.createElement("div");
         toast.className = `toast ${type}`;
         toast.textContent = message;
-
         container.appendChild(toast);
-
         setTimeout(() => {
             toast.style.opacity = "0";
             toast.style.transform = "translateX(100%)";
@@ -357,11 +350,9 @@
             const response = await fetch("/student");
             if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
-
             output.replaceChildren();
             const info = document.createElement("div");
             info.className = "student-info";
-
             const fields = [
                 ["Student ID", data.id ?? data.student_id],
                 ["Name", data.name],
@@ -369,7 +360,6 @@
                 ["Year", data.year],
                 ["Section", data.section]
             ];
-
             fields.forEach(([label, value]) => {
                 const p = document.createElement("p");
                 const bold = document.createElement("strong");
@@ -378,7 +368,6 @@
                 p.appendChild(document.createTextNode(value == null ? "" : String(value)));
                 info.appendChild(p);
             });
-
             output.appendChild(info);
         } catch (error) {
             console.error("Student API error:", error);
@@ -389,12 +378,10 @@
     async function sayHello() {
         const name = document.getElementById("nameInput").value.trim();
         const output = document.getElementById("greeting");
-
         if (!name) {
             output.textContent = "Please enter your first name. 💕";
             return;
         }
-
         output.textContent = "Loading greeting...";
         try {
             const response = await fetch("/hello?name=" + encodeURIComponent(name));
@@ -428,11 +415,9 @@
             const response = await fetch("/course");
             if (!response.ok) throw new Error("HTTP " + response.status);
             const data = await response.json();
-
             output.replaceChildren();
             const info = document.createElement("div");
             info.className = "student-info";
-
             const fields = [
                 ["Course", data.course],
                 ["Program", data.program],
@@ -440,7 +425,6 @@
                 ["Section", data.section],
                 ["Description", data.description]
             ];
-
             fields.forEach(([label, value]) => {
                 const p = document.createElement("p");
                 const bold = document.createElement("strong");
@@ -449,7 +433,6 @@
                 p.appendChild(document.createTextNode(value == null ? "" : String(value)));
                 info.appendChild(p);
             });
-
             output.appendChild(info);
         } catch (error) {
             console.error("Course API error:", error);
@@ -462,16 +445,13 @@
             const response = await fetch("/api/students");
             if (!response.ok) throw new Error("Failed to retrieve students");
             const data = await response.json();
-
             tableBody.replaceChildren();
-
             if (data.length === 0) {
                 let row = document.createElement("tr");
                 row.innerHTML = `<td colspan="7" style="text-align: center;">No student records found.</td>`;
                 tableBody.appendChild(row);
                 return;
             }
-
             data.forEach(student => {
                 let row = document.createElement("tr");
                 row.innerHTML = `
@@ -496,9 +476,62 @@
         }
     }
 
+    // Step 8: View and Retrieve Classmate's Output
+    async function loadClassmateRecords() {
+        classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Loading classmate's records...</td></tr>`;
+        
+        const classmateAPI = "https://distura-kate-ashley-voh6.onrender.com/students";
+        try {
+            const response = await fetch(classmateAPI);
+            if (!response.ok) throw new Error("HTTP status " + response.status);
+            
+            let data = await response.json();
+            console.log("Classmate Raw Response:", data);
+
+            // Handle wrapped responses (e.g. { data: [...] } or { students: [...] })
+            if (!Array.isArray(data)) {
+                data = data.students || data.data || data.records || [];
+            }
+
+            classmateTableBody.replaceChildren();
+
+            if (!Array.isArray(data) || data.length === 0) {
+                let row = document.createElement("tr");
+                row.innerHTML = `<td colspan="6" style="text-align: center;">No records found in classmate's database (or database reset on Render).</td>`;
+                classmateTableBody.appendChild(row);
+                return;
+            }
+
+            data.forEach(student => {
+                let row = document.createElement("tr");
+                // Check alternative field naming conventions (camelCase vs snake_case)
+                const id = student.id ?? student.student_id ?? "-";
+                const studentId = student.student_id ?? student.studentId ?? student.id ?? "-";
+                const name = student.name ?? student.fullName ?? student.full_name ?? "-";
+                const program = student.program ?? student.course ?? "-";
+                const year = student.year ?? student.yearLevel ?? "-";
+                const section = student.section ?? "-";
+
+                row.innerHTML = `
+                    <td>${id}</td>
+                    <td>${studentId}</td>
+                    <td>${name}</td>
+                    <td>${program}</td>
+                    <td>${year}</td>
+                    <td>${section}</td>
+                `;
+                classmateTableBody.appendChild(row);
+            });
+            showNotification("Successfully loaded classmate's records!", "success");
+        } catch (error) {
+            console.error("Classmate API error:", error);
+            classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #e75480;">Failed to fetch: CORS restriction or server sleeping. Try again in 30s.</td></tr>`;
+            showNotification("Failed to fetch classmate records", "error");
+        }
+    }
+
     form.addEventListener("submit", async function(e) {
         e.preventDefault();
-
         const internalId = document.getElementById("internalId").value;
         const isUpdate = Boolean(internalId);
         
@@ -509,28 +542,20 @@
             year: parseInt(document.getElementById("year").value),
             section: document.getElementById("section").value
         };
-
         const url = isUpdate ? `/api/students/${internalId}` : '/api/students';
         const method = isUpdate ? 'PUT' : 'POST';
-
         try {
             const response = await fetch(url, {
                 method: method,
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(studentData)
             });
-
             if (!response.ok) throw new Error("Operation failed");
-
             const result = await response.json();
             
-            // Show toast message
             showNotification(result.message || (isUpdate ? "Student updated successfully!" : "Student added successfully!"), "success");
-
             resetForm();
             await loadStudents();
-
-            // Smooth navigate/scroll to refreshed records table
             scrollToTable();
         } catch (error) {
             console.error("Save error:", error);
@@ -557,12 +582,9 @@
                 const response = await fetch(`/api/students/${id}`, {
                     method: 'DELETE'
                 });
-
                 if (!response.ok) throw new Error("Delete failed");
-
                 const result = await response.json();
                 
-                // Show delete notification
                 showNotification(result.message || "Student record deleted successfully!", "success");
                 
                 await loadStudents();
@@ -580,6 +602,5 @@
         document.getElementById("saveBtn").innerText = "Add Student";
     }
 </script>
-
 </body>
 </html>
