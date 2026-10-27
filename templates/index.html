@@ -476,57 +476,66 @@
         }
     }
 
-    // Step 8: View and Retrieve Classmate's Output
-    async function loadClassmateRecords() {
-        classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Loading classmate's records...</td></tr>`;
+    // Step 8: View and Retrieve Classmate's Output with automatic retry logic for Render spin-up
+    async function loadClassmateRecords(retries = 3, delayMs = 5000) {
+        classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Connecting to classmate's server (waking up Render)...</td></tr>`;
         
         const classmateAPI = "https://distura-kate-ashley-voh6.onrender.com/students";
-        try {
-            const response = await fetch(classmateAPI);
-            if (!response.ok) throw new Error("HTTP status " + response.status);
-            
-            let data = await response.json();
-            console.log("Classmate Raw Response:", data);
+        
+        for (let attempt = 1; attempt <= retries; attempt++) {
+            try {
+                const response = await fetch(classmateAPI);
+                if (!response.ok) throw new Error("HTTP status " + response.status);
+                
+                let data = await response.json();
+                console.log("Classmate Raw Response:", data);
 
-            // Handle wrapped responses (e.g. { data: [...] } or { students: [...] })
-            if (!Array.isArray(data)) {
-                data = data.students || data.data || data.records || [];
+                // Handle wrapped responses (e.g. { data: [...] } or { students: [...] })
+                if (!Array.isArray(data)) {
+                    data = data.students || data.data || data.records || [];
+                }
+
+                classmateTableBody.replaceChildren();
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    let row = document.createElement("tr");
+                    row.innerHTML = `<td colspan="6" style="text-align: center;">No records found in classmate's database.</td>`;
+                    classmateTableBody.appendChild(row);
+                    return;
+                }
+
+                data.forEach(student => {
+                    let row = document.createElement("tr");
+                    const id = student.id ?? student.student_id ?? "-";
+                    const studentId = student.student_id ?? student.studentId ?? student.id ?? "-";
+                    const name = student.name ?? student.fullName ?? student.full_name ?? "-";
+                    const program = student.program ?? student.course ?? "-";
+                    const year = student.year ?? student.yearLevel ?? "-";
+                    const section = student.section ?? "-";
+
+                    row.innerHTML = `
+                        <td>${id}</td>
+                        <td>${studentId}</td>
+                        <td>${name}</td>
+                        <td>${program}</td>
+                        <td>${year}</td>
+                        <td>${section}</td>
+                    `;
+                    classmateTableBody.appendChild(row);
+                });
+                showNotification("Successfully loaded classmate's records!", "success");
+                return; // Exit function on success
+            } catch (error) {
+                console.warn(`Attempt ${attempt} failed:`, error);
+                if (attempt < retries) {
+                    classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Server is warming up... Retrying (${attempt}/${retries})...</td></tr>`;
+                    await new Promise(res => setTimeout(res, delayMs));
+                } else {
+                    console.error("Classmate API error:", error);
+                    classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #e75480;">Failed to fetch: Server is sleeping or missing CORS headers. Ensure <code>flask-cors</code> is enabled on partner server.</td></tr>`;
+                    showNotification("Failed to fetch classmate records", "error");
+                }
             }
-
-            classmateTableBody.replaceChildren();
-
-            if (!Array.isArray(data) || data.length === 0) {
-                let row = document.createElement("tr");
-                row.innerHTML = `<td colspan="6" style="text-align: center;">No records found in classmate's database (or database reset on Render).</td>`;
-                classmateTableBody.appendChild(row);
-                return;
-            }
-
-            data.forEach(student => {
-                let row = document.createElement("tr");
-                // Check alternative field naming conventions (camelCase vs snake_case)
-                const id = student.id ?? student.student_id ?? "-";
-                const studentId = student.student_id ?? student.studentId ?? student.id ?? "-";
-                const name = student.name ?? student.fullName ?? student.full_name ?? "-";
-                const program = student.program ?? student.course ?? "-";
-                const year = student.year ?? student.yearLevel ?? "-";
-                const section = student.section ?? "-";
-
-                row.innerHTML = `
-                    <td>${id}</td>
-                    <td>${studentId}</td>
-                    <td>${name}</td>
-                    <td>${program}</td>
-                    <td>${year}</td>
-                    <td>${section}</td>
-                `;
-                classmateTableBody.appendChild(row);
-            });
-            showNotification("Successfully loaded classmate's records!", "success");
-        } catch (error) {
-            console.error("Classmate API error:", error);
-            classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #e75480;">Failed to fetch: CORS restriction or server sleeping. Try again in 30s.</td></tr>`;
-            showNotification("Failed to fetch classmate records", "error");
         }
     }
 
