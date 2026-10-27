@@ -38,7 +38,9 @@ def get_student():
     })
 
 
-@app.route("/students")
+# Fixed: Supporting both /students and /api/students for GET requests
+@app.route("/students", methods=["GET"])
+@app.route("/api/students", methods=["GET"])
 def get_students():
     conn = get_db_connection()
     try:
@@ -46,6 +48,11 @@ def get_students():
             "SELECT * FROM students"
         ).fetchall()
         return jsonify([dict(student) for student in students])
+    except sqlite3.OperationalError as error:
+        return jsonify({
+            "error": "Database table not found. Please run init_db.py first.",
+            "details": str(error)
+        }), 500
     finally:
         conn.close()
 
@@ -167,7 +174,7 @@ def add_student():
         }), 400
 
     if any(not str(data[field]).strip() for field in
-           ["student_id", "name", "program", "section"]):
+            ["student_id", "name", "program", "section"]):
         return jsonify({"error": "Student fields cannot be empty"}), 400
 
     try:
@@ -242,7 +249,7 @@ def update_student(id):
         }), 400
 
     if any(not str(data[field]).strip() for field in
-           ["student_id", "name", "program", "section"]):
+            ["student_id", "name", "program", "section"]):
         return jsonify({"error": "Student fields cannot be empty"}), 400
 
     try:
