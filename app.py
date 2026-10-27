@@ -38,7 +38,6 @@ def get_student():
     })
 
 
-# Fixed: Supporting both /students and /api/students for GET requests
 @app.route("/students", methods=["GET"])
 @app.route("/api/students", methods=["GET"])
 def get_students():
@@ -57,7 +56,21 @@ def get_students():
         conn.close()
 
 
+@app.route("/students/section/<section_name>")
+def get_students_by_section(section_name):
+    conn = get_db_connection()
+    try:
+        students = conn.execute(
+            "SELECT * FROM students WHERE section = ?",
+            (section_name.upper(),)
+        ).fetchall()
+        return jsonify([dict(student) for student in students])
+    finally:
+        conn.close()
+
+
 @app.route("/students/<int:id>")
+@app.route("/api/students/<int:id>", methods=["GET"])
 def get_student_by_id(id):
     conn = get_db_connection()
     try:
@@ -71,19 +84,6 @@ def get_student_by_id(id):
         return jsonify({"error": "Student not found"}), 404
 
     return jsonify(dict(student))
-
-
-@app.route("/students/section/<section_name>")
-def get_students_by_section(section_name):
-    conn = get_db_connection()
-    try:
-        students = conn.execute(
-            "SELECT * FROM students WHERE section = ?",
-            (section_name.upper(),)
-        ).fetchall()
-        return jsonify([dict(student) for student in students])
-    finally:
-        conn.close()
 
 
 @app.route("/hello")
@@ -215,22 +215,6 @@ def add_student():
         "message": "Student added successfully",
         "id": new_id
     }), 201
-
-
-@app.route("/api/students/<int:id>", methods=["GET"])
-def api_get_student(id):
-    conn = get_db_connection()
-    try:
-        student = conn.execute(
-            "SELECT * FROM students WHERE id = ?", (id,)
-        ).fetchone()
-    finally:
-        conn.close()
-
-    if student is None:
-        return jsonify({"error": "Student not found"}), 404
-
-    return jsonify(dict(student))
 
 
 @app.route("/api/students/<int:id>", methods=["PUT"])
