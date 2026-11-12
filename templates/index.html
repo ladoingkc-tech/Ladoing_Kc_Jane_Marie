@@ -1,615 +1,1058 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student API Interface</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff0f5;
-            margin: 0;
-            padding: 30px 15px;
-            color: #5c3545;
-        }
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-        }
-        h1 {
-            text-align: center;
-            color: white;
-            background-color: #f28bb3;
-            padding: 25px 15px;
-            border-radius: 15px;
-            font-size: 27px;
-            box-shadow: 0 4px 10px rgba(230, 100, 150, 0.2);
-        }
-        .card {
-            background-color: white;
-            padding: 25px;
-            margin-top: 22px;
-            border-radius: 15px;
-            border: 1px solid #ffd6e5;
-            box-shadow: 0 4px 12px rgba(230, 100, 150, 0.12);
-        }
-        h2 {
-            color: #e75480;
-            margin-top: 0;
-            font-size: 21px;
-        }
-        p {
-            line-height: 1.6;
-        }
-        button {
-            background-color: #ec6f9e;
-            color: white;
-            border: 2px solid #222;
-            padding: 8px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #d94f83;
-            transform: translateY(-2px);
-        }
-        .btn-danger {
-            background-color: #ff6b8b;
-        }
-        .btn-danger:hover {
-            background-color: #e0486c;
-        }
-        .btn-secondary {
-            background-color: #b87994;
-        }
-        .btn-secondary:hover {
-            background-color: #9c5f7c;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0 15px;
-            border: 1px solid #f4b6cc;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-            background-color: #fffafd;
-            color: #5c3545;
-        }
-        input:focus {
-            outline: none;
-            border-color: #ec6f9e;
-            box-shadow: 0 0 0 3px #ffe0eb;
-        }
-        .result {
-            margin-top: 18px;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #ffd6e5;
-            background-color: #fff0f6;
-            overflow-x: auto;
-        }
-        .student-info p {
-            padding: 9px 0;
-            margin: 0;
-            border-bottom: 1px solid #f8d5e2;
-        }
-        .student-info p:last-child {
-            border-bottom: none;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            white-space: nowrap;
-        }
-        th, td {
-            border: 1px solid #f4b6cc;
-            padding: 10px 12px;
-            text-align: left;
-            font-size: 13px;
-        }
-        th {
-            background-color: #ffe0eb;
-            color: #5c3545;
-        }
-        .action-btns {
-            display: flex;
-            gap: 5px;
-        }
-        #greeting {
-            color: #d63375;
-            font-weight: bold;
-            overflow-wrap: anywhere;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            color: #b87994;
-            font-size: 13px;
-        }
-        /* Toast Notifications Styling */
-        #notificationContainer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .toast {
-            min-width: 250px;
-            padding: 14px 20px;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            animation: slideIn 0.3s ease-out forwards;
-        }
-        .toast.success {
-            background-color: #2e7d32;
-            border-left: 6px solid #1b5e20;
-        }
-        .toast.error {
-            background-color: #d32f2f;
-            border-left: 6px solid #b71c1c;
-        }
-        .toast.info {
-            background-color: #e75480;
-            border-left: 6px solid #b8325a;
-        }
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        @media (max-width: 480px) {
-            h1 { font-size: 23px; }
-            .card { padding: 18px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student API Interface</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff0f5;
+    margin: 0;
+    padding: 30px 15px;
+    color: #5c3545;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    background-color: #f28bb3;
+    padding: 25px 15px;
+    border-radius: 15px;
+    font-size: 27px;
+    box-shadow: 0 4px 10px rgba(230,100,150,.2);
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-top: 22px;
+    border-radius: 15px;
+    border: 1px solid #ffd6e5;
+    box-shadow: 0 4px 12px rgba(230,100,150,.12);
+}
+
+h2 {
+    color: #e75480;
+    margin-top: 0;
+    font-size: 21px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+button {
+    background-color: #ec6f9e;
+    color: white;
+    border: 2px solid #222;
+    padding: 9px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 3px;
+    transition: .3s;
+}
+
+button:hover {
+    background-color: #d94f83;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: #ff6b8b;
+}
+
+.btn-secondary {
+    background-color: #b87994;
+}
+
+.btn-success {
+    background-color: #2e7d32;
+    border-color: #1b5e20;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 15px;
+    border: 1px solid #f4b6cc;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fffafd;
+    color: #5c3545;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ec6f9e;
+    box-shadow: 0 0 0 3px #ffe0eb;
+}
+
+.result {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ffd6e5;
+    background: #fff0f6;
+    overflow-x: auto;
+}
+
+.student-info p {
+    padding: 9px 0;
+    margin: 0;
+    border-bottom: 1px solid #f8d5e2;
+}
+
+.student-info p:last-child {
+    border-bottom: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    white-space: nowrap;
+}
+
+th, td {
+    border: 1px solid #f4b6cc;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    background: #ffe0eb;
+    color: #5c3545;
+}
+
+.action-btns {
+    display: flex;
+    gap: 5px;
+}
+
+#greeting {
+    color: #d63375;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #b87994;
+    font-size: 13px;
+}
+
+#notificationContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    min-width: 250px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.15);
+    animation: slideIn .3s ease-out;
+}
+
+.toast.success {
+    background: #2e7d32;
+}
+
+.toast.error {
+    background: #d32f2f;
+}
+
+.toast.info {
+    background: #e75480;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media(max-width:600px) {
+    h1 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+</style>
 </head>
+
 <body>
-<!-- Toast Notification Area -->
+
 <div id="notificationContainer"></div>
+
 <div class="container">
-    <h1>🎀 Student API Interface 🎀</h1>
-    
-    <!-- Student Information -->
-    <div class="card">
-        <h2>🌸 Student Information</h2>
-        <p>Click the button below to view student details.</p>
-        <button onclick="loadStudent()">Load Student Information</button>
-        <div id="result" class="result">
-            Student information will appear here.
-        </div>
-    </div>
 
-    <!-- Greeting API -->
-    <div class="card">
-        <h2>💗 Greeting API</h2>
-        <p>Enter your first name to receive a greeting!</p>
-        <input type="text" id="nameInput" placeholder="Enter your first name" maxlength="100">
-        <button onclick="sayHello()">Say Hello 💕</button>
-        <p id="greeting"></p>
-    </div>
+<h1>🎀 Student API Interface 🎀</h1>
 
-    <!-- Custom API Endpoint -->
-    <div class="card">
-        <h2>✨ Custom API Endpoint</h2>
-        <p>Click the button to retrieve the response from your <code>/api</code> endpoint.</p>
-        <button onclick="loadAPI()">Load API Message</button>
-        <div id="apiResult" class="result">
-            Your API message will appear here.
-        </div>
-    </div>
-
-    <!-- Course Information -->
-    <div class="card">
-        <h2>📚 Course Information</h2>
-        <p>Click the button to retrieve your course data from the <code>/course</code> endpoint.</p>
-        <button onclick="loadCourse()">Load Course Information</button>
-        <div id="courseResult" class="result">
-            Your course information will appear here.
-        </div>
-    </div>
-
-    <!-- Students CRUD Dashboard -->
-    <div class="card">
-        <h2>🗂️ Student CRUD Management</h2>
-        <p>Add, edit, or delete student records in your SQLite database.</p>
-        <!-- Form for Add/Edit -->
-        <form id="studentForm">
-            <input type="hidden" id="internalId">
-            
-            <label><strong>Student ID:</strong></label>
-            <input type="text" id="student_id" placeholder="e.g. 24-0087" required>
-            
-            <label><strong>Name:</strong></label>
-            <input type="text" id="name" placeholder="Full Name" required>
-            
-            <label><strong>Program:</strong></label>
-            <input type="text" id="program" placeholder="e.g. BSIT" required>
-            
-            <label><strong>Year:</strong></label>
-            <input type="number" id="year" placeholder="e.g. 3" required>
-            
-            <label><strong>Section:</strong></label>
-            <input type="text" id="section" placeholder="e.g. B" required>
-            
-            <button type="submit" id="saveBtn">Add Student</button>
-            <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
-        </form>
-        <div style="margin-top: 20px;">
-            <button onclick="loadStudents()">Refresh Student Records</button>
-        </div>
-        <div class="result" id="tableContainer">
-            <table>
-                <thead>
-                    <tr>
-                        <th>DB ID</th>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Program</th>
-                        <th>Year</th>
-                        <th>Section</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="studentTableBody">
-                    <tr>
-                        <td colspan="7" style="text-align: center;">Click "Refresh Student Records" to load data.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Classmate's Records Section -->
-    <div class="card">
-        <h2>🌐 Classmate's Records</h2>
-        <p>View student records retrieved directly from your partner's deployed API endpoint.</p>
-        
-        <div style="margin-top: 10px;">
-            <button onclick="loadClassmateRecords()">Load Classmate's Records</button>
-        </div>
-        <div class="result">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Program</th>
-                        <th>Year</th>
-                        <th>Section</th>
-                    </tr>
-                </thead>
-                <tbody id="classmateTableBody">
-                    <tr>
-                        <td colspan="6" style="text-align: center;">Click "Load Classmate's Records" to load data.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="footer">
-        ♡ Student API Interface | Made with love ♡
+<!-- STUDENT INFORMATION -->
+<div class="card">
+    <h2>🌸 Student Information</h2>
+    <p>Click the button below to view student details.</p>
+    <button onclick="loadStudent()">Load Student Information</button>
+    <div id="result" class="result">
+        Student information will appear here.
     </div>
 </div>
 
+<!-- GREETING API -->
+<div class="card">
+    <h2>💗 Greeting API</h2>
+    <p>Enter your first name to receive a greeting!</p>
+    <input type="text" id="nameInput"
+           placeholder="Enter your first name" maxlength="100">
+    <button onclick="sayHello()">Say Hello 💕</button>
+    <p id="greeting"></p>
+</div>
+
+<!-- CUSTOM API -->
+<div class="card">
+    <h2>✨ Custom API Endpoint</h2>
+    <p>Retrieve the response from your /api endpoint.</p>
+    <button onclick="loadAPI()">Load API Message</button>
+    <div id="apiResult" class="result">
+        Your API message will appear here.
+    </div>
+</div>
+
+<!-- COURSE -->
+<div class="card">
+    <h2>📚 Course Information</h2>
+    <p>Retrieve your course data from the /course endpoint.</p>
+    <button onclick="loadCourse()">Load Course Information</button>
+    <div id="courseResult" class="result">
+        Your course information will appear here.
+    </div>
+</div>
+
+<!-- MY CRUD DATABASE -->
+<div class="card">
+    <h2>🗂️ My Student CRUD Management</h2>
+    <p>Add, edit, or delete records in your own SQLite database.</p>
+
+    <form id="studentForm">
+
+        <input type="hidden" id="internalId">
+
+        <label><strong>Student ID:</strong></label>
+        <input type="text" id="student_id"
+               placeholder="e.g. 24-0087" required>
+
+        <label><strong>Name:</strong></label>
+        <input type="text" id="name"
+               placeholder="Full Name" required>
+
+        <label><strong>Program:</strong></label>
+        <input type="text" id="program"
+               placeholder="e.g. BSIT" required>
+
+        <label><strong>Year:</strong></label>
+        <input type="number" id="year"
+               placeholder="e.g. 3" min="1" required>
+
+        <label><strong>Section:</strong></label>
+        <input type="text" id="section"
+               placeholder="e.g. B" required>
+
+        <button type="submit" id="saveBtn">Add Student</button>
+        <button type="button" class="btn-secondary"
+                onclick="resetForm()">Clear Form</button>
+    </form>
+
+    <button onclick="loadStudents()">Refresh Student Records</button>
+
+    <div class="result" id="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th>DB ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Source</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <tr>
+                    <td colspan="8">Loading records...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CLASSMATE RECORDS - DISPLAY ONLY -->
+<div class="card">
+    <h2>🌐 Classmate's Records</h2>
+    <p>Records retrieved from your classmate's deployed API.</p>
+
+    <button onclick="loadClassmateRecords()">
+        Load Classmate's Records
+    </button>
+
+    <div class="result">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                </tr>
+            </thead>
+            <tbody id="classmateTableBody">
+                <tr>
+                    <td colspan="6">Click the button to load classmate records.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- PARTNER RECORDS - SEPARATE -->
+<div class="card">
+    <h2>💞 Partner's Records</h2>
+    <p>Records retrieved from your partner's deployed API.</p>
+
+    <button onclick="loadPartnerRecords()">
+        Load Partner's Records
+    </button>
+
+    <div class="result">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="partnerTableBody">
+                <tr>
+                    <td colspan="7">Click the button to load partner records.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- VIEW REMOTE RECORD -->
+<div class="card" id="viewCard" style="display:none;">
+    <h2>🔍 Selected Remote Record Details</h2>
+    <div id="viewResult" class="result"></div>
+    <button class="btn-secondary" onclick="closeViewCard()">
+        Close Preview
+    </button>
+</div>
+
+<div class="footer">
+    ♡ Student API Interface | Made with love ♡
+</div>
+
+</div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        loadStudents();
-        loadClassmateRecords(); // Automatically trigger classmate API load on start
+
+// API URLS
+const CLASSMATE_API =
+"https://distura-kate-ashley-voh6.onrender.com/students";
+
+// IMPORTANT: Replace with your actual partner's deployed API URL.
+const PARTNER_API =
+"https://distura-kate-ashley-voh6.onrender.com/students";
+
+// ELEMENTS
+const form = document.getElementById("studentForm");
+const tableBody = document.getElementById("studentTableBody");
+const classmateTableBody =
+document.getElementById("classmateTableBody");
+const partnerTableBody =
+document.getElementById("partnerTableBody");
+
+// NOTIFICATIONS
+function showNotification(message, type = "info") {
+    const container =
+    document.getElementById("notificationContainer");
+
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+function scrollToTable() {
+    document.getElementById("tableContainer")
+    .scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+// STUDENT INFORMATION
+async function loadStudent() {
+    const output = document.getElementById("result");
+    output.textContent = "Loading student information...";
+
+    try {
+        const response = await fetch("/student");
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        displayInformation(output, [
+            ["Student ID", data.id ?? data.student_id],
+            ["Name", data.name],
+            ["Program", data.program],
+            ["Year", data.year],
+            ["Section", data.section]
+        ]);
+
+    } catch (error) {
+        output.textContent =
+        "Unable to retrieve student information: " + error.message;
+    }
+}
+
+// DISPLAY INFORMATION SAFELY
+function displayInformation(output, fields) {
+    output.replaceChildren();
+
+    const info = document.createElement("div");
+    info.className = "student-info";
+
+    fields.forEach(([label, value]) => {
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+
+        strong.textContent = label + ": ";
+        p.appendChild(strong);
+        p.appendChild(
+            document.createTextNode(value == null ? "" : String(value))
+        );
+
+        info.appendChild(p);
     });
 
-    const form = document.getElementById("studentForm");
-    const tableBody = document.getElementById("studentTableBody");
-    const classmateTableBody = document.getElementById("classmateTableBody");
+    output.appendChild(info);
+}
 
-    // Toast Notification helper function
-    function showNotification(message, type = "info") {
-        const container = document.getElementById("notificationContainer");
-        const toast = document.createElement("div");
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        container.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = "0";
-            toast.style.transform = "translateX(100%)";
-            toast.style.transition = "all 0.3s ease-in";
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
+// GREETING API
+async function sayHello() {
+    const name =
+    document.getElementById("nameInput").value.trim();
+
+    const output = document.getElementById("greeting");
+
+    if (!name) {
+        output.textContent = "Please enter your first name. 💕";
+        return;
     }
 
-    // Helper to scroll to the Student Records table smoothly
-    function scrollToTable() {
-        const tableContainer = document.getElementById("tableContainer");
-        tableContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+    output.textContent = "Loading greeting...";
 
-    async function loadStudent() {
-        const output = document.getElementById("result");
-        output.textContent = "Loading student information...";
-        try {
-            const response = await fetch("/student");
-            if (!response.ok) throw new Error("HTTP " + response.status);
-            const data = await response.json();
-            output.replaceChildren();
-            const info = document.createElement("div");
-            info.className = "student-info";
-            const fields = [
-                ["Student ID", data.id ?? data.student_id],
-                ["Name", data.name],
-                ["Program", data.program],
-                ["Year", data.year],
-                ["Section", data.section]
-            ];
-            fields.forEach(([label, value]) => {
-                const p = document.createElement("p");
-                const bold = document.createElement("strong");
-                bold.textContent = label + ": ";
-                p.appendChild(bold);
-                p.appendChild(document.createTextNode(value == null ? "" : String(value)));
-                info.appendChild(p);
-            });
-            output.appendChild(info);
-        } catch (error) {
-            console.error("Student API error:", error);
-            output.textContent = "Unable to retrieve student information: " + error.message;
+    try {
+        const response = await fetch(
+            "/hello?name=" + encodeURIComponent(name)
+        );
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
         }
-    }
 
-    async function sayHello() {
-        const name = document.getElementById("nameInput").value.trim();
-        const output = document.getElementById("greeting");
-        if (!name) {
-            output.textContent = "Please enter your first name. 💕";
+        const data = await response.json();
+        output.textContent = data.message;
+
+    } catch (error) {
+        output.textContent =
+        "Unable to retrieve greeting: " + error.message;
+    }
+}
+
+// CUSTOM API
+async function loadAPI() {
+    const output = document.getElementById("apiResult");
+    output.textContent = "Loading API message...";
+
+    try {
+        const response = await fetch("/api");
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        output.textContent = await response.text();
+
+    } catch (error) {
+        output.textContent =
+        "Unable to retrieve API message: " + error.message;
+    }
+}
+
+// COURSE API
+async function loadCourse() {
+    const output = document.getElementById("courseResult");
+    output.textContent = "Loading course information...";
+
+    try {
+        const response = await fetch("/course");
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        displayInformation(output, [
+            ["Course", data.course],
+            ["Program", data.program],
+            ["Year", data.year],
+            ["Section", data.section],
+            ["Description", data.description]
+        ]);
+
+    } catch (error) {
+        output.textContent =
+        "Unable to retrieve course information: " + error.message;
+    }
+}
+
+// MY SQLITE STUDENT RECORDS
+async function loadStudents() {
+    tableBody.innerHTML =
+    `<tr><td colspan="8">Loading records...</td></tr>`;
+
+    try {
+        const response = await fetch("/api/students");
+
+        if (!response.ok) {
+            throw new Error("Failed to retrieve students");
+        }
+
+        const data = await response.json();
+
+        tableBody.replaceChildren();
+
+        if (!Array.isArray(data) || data.length === 0) {
+            tableBody.innerHTML =
+            `<tr><td colspan="8">No student records found.</td></tr>`;
             return;
         }
-        output.textContent = "Loading greeting...";
-        try {
-            const response = await fetch("/hello?name=" + encodeURIComponent(name));
-            if (!response.ok) throw new Error("HTTP " + response.status);
-            const data = await response.json();
-            output.textContent = data.message;
-        } catch (error) {
-            console.error("Greeting API error:", error);
-            output.textContent = "Unable to retrieve greeting: " + error.message;
-        }
-    }
 
-    async function loadAPI() {
-        const output = document.getElementById("apiResult");
-        output.textContent = "Loading API message...";
-        try {
-            const response = await fetch("/api");
-            if (!response.ok) throw new Error("HTTP " + response.status);
-            const data = await response.text();
-            output.textContent = data;
-        } catch (error) {
-            console.error("API error:", error);
-            output.textContent = "Unable to retrieve API message: " + error.message;
-        }
-    }
+        data.forEach(student => {
+            const row = document.createElement("tr");
 
-    async function loadCourse() {
-        const output = document.getElementById("courseResult");
-        output.textContent = "Loading course information...";
-        try {
-            const response = await fetch("/course");
-            if (!response.ok) throw new Error("HTTP " + response.status);
-            const data = await response.json();
-            output.replaceChildren();
-            const info = document.createElement("div");
-            info.className = "student-info";
-            const fields = [
-                ["Course", data.course],
-                ["Program", data.program],
-                ["Year", data.year],
-                ["Section", data.section],
-                ["Description", data.description]
+            const values = [
+                student.id,
+                student.student_id,
+                student.name,
+                student.program,
+                student.year,
+                student.section,
+                student.source || "Local"
             ];
-            fields.forEach(([label, value]) => {
-                const p = document.createElement("p");
-                const bold = document.createElement("strong");
-                bold.textContent = label + ": ";
-                p.appendChild(bold);
-                p.appendChild(document.createTextNode(value == null ? "" : String(value)));
-                info.appendChild(p);
+
+            values.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value ?? "";
+                row.appendChild(td);
             });
-            output.appendChild(info);
-        } catch (error) {
-            console.error("Course API error:", error);
-            output.textContent = "Unable to retrieve course information: " + error.message;
+
+            const actionCell = document.createElement("td");
+            const actions = document.createElement("div");
+            actions.className = "action-btns";
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.onclick = () => editStudent(student);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "btn-danger";
+            deleteButton.onclick = () => deleteStudent(student.id);
+
+            actions.append(editButton, deleteButton);
+            actionCell.appendChild(actions);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        tableBody.innerHTML =
+        `<tr><td colspan="8">Unable to retrieve student records.</td></tr>`;
+
+        showNotification("Unable to load local records.", "error");
+    }
+}
+
+// ADD / UPDATE STUDENT
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const internalId =
+    document.getElementById("internalId").value;
+
+    const isUpdate = Boolean(internalId);
+
+    const studentData = {
+        student_id: document.getElementById("student_id").value.trim(),
+        name: document.getElementById("name").value.trim(),
+        program: document.getElementById("program").value.trim(),
+        year: parseInt(document.getElementById("year").value, 10),
+        section: document.getElementById("section").value.trim()
+    };
+
+    const url = isUpdate
+        ? `/api/students/${internalId}`
+        : "/api/students";
+
+    try {
+        const response = await fetch(url, {
+            method: isUpdate ? "PUT" : "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(studentData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Operation failed");
         }
+
+        showNotification(
+            result.message ||
+            (isUpdate ? "Student updated!" : "Student added!"),
+            "success"
+        );
+
+        resetForm();
+        await loadStudents();
+        scrollToTable();
+
+    } catch (error) {
+        console.error(error);
+        showNotification(error.message, "error");
+    }
+});
+
+// EDIT STUDENT
+function editStudent(student) {
+    document.getElementById("internalId").value = student.id;
+    document.getElementById("student_id").value = student.student_id || "";
+    document.getElementById("name").value = student.name || "";
+    document.getElementById("program").value = student.program || "";
+    document.getElementById("year").value = student.year || "";
+    document.getElementById("section").value = student.section || "";
+
+    document.getElementById("saveBtn").textContent =
+    "Update Student";
+
+    showNotification("Editing student record.", "info");
+
+    form.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+// DELETE STUDENT
+async function deleteStudent(id) {
+    if (!confirm("Are you sure you want to delete this student record?")) {
+        return;
     }
 
-    async function loadStudents() {
+    try {
+        const response = await fetch(`/api/students/${id}`, {
+            method: "DELETE"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Delete failed");
+        }
+
+        showNotification(
+            result.message || "Student deleted successfully!",
+            "success"
+        );
+
+        await loadStudents();
+        scrollToTable();
+
+    } catch (error) {
+        showNotification(error.message, "error");
+    }
+}
+
+// RESET FORM
+function resetForm() {
+    form.reset();
+
+    document.getElementById("internalId").value = "";
+
+    document.getElementById("saveBtn").textContent =
+    "Add Student";
+}
+
+// SHARED REMOTE RECORD LOADER
+async function loadRemoteRecords(apiUrl, targetTable, sourceName) {
+    targetTable.innerHTML =
+    `<tr><td colspan="7">Connecting to ${sourceName}'s server...</td></tr>`;
+
+    let lastError;
+
+    for (let attempt = 1; attempt <= 3; attempt++) {
         try {
-            const response = await fetch("/api/students");
-            if (!response.ok) throw new Error("Failed to retrieve students");
-            const data = await response.json();
-            tableBody.replaceChildren();
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
+            }
+
+            let data = await response.json();
+
+            if (!Array.isArray(data)) {
+                data = data.students || data.data || data.records || [];
+            }
+
+            if (!Array.isArray(data)) {
+                throw new Error("Invalid API response format");
+            }
+
+            targetTable.replaceChildren();
+
             if (data.length === 0) {
-                let row = document.createElement("tr");
-                row.innerHTML = `<td colspan="7" style="text-align: center;">No student records found.</td>`;
-                tableBody.appendChild(row);
+                targetTable.innerHTML =
+                `<tr><td colspan="7">No ${sourceName} records found.</td></tr>`;
                 return;
             }
+
             data.forEach(student => {
-                let row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${student.id}</td>
-                    <td>${student.student_id || ""}</td>
-                    <td>${student.name || ""}</td>
-                    <td>${student.program || ""}</td>
-                    <td>${student.year ?? ""}</td>
-                    <td>${student.section || ""}</td>
-                    <td>
-                        <div class="action-btns">
-                            <button onclick="editStudent(${student.id}, '${student.student_id || ""}', '${(student.name || "").replace(/'/g, "\\\\'")}', '${student.program || ""}', ${student.year || 0}, '${student.section || ""}')">Edit</button>
-                            <button class="btn-danger" onclick="deleteStudent(${student.id})">Delete</button>
-                        </div>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        } catch (error) {
-            console.error("Load students error:", error);
-            tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #e75480;">Unable to retrieve student records.</td></tr>`;
-        }
-    }
+                const row = document.createElement("tr");
 
-    // Step 8: View and Retrieve Classmate's Output with automatic retry logic for Render spin-up
-    async function loadClassmateRecords(retries = 3, delayMs = 5000) {
-        classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Connecting to classmate's server (waking up Render)...</td></tr>`;
-        
-        const classmateAPI = "https://distura-kate-ashley-voh6.onrender.com/students";
-        
-        for (let attempt = 1; attempt <= retries; attempt++) {
-            try {
-                const response = await fetch(classmateAPI);
-                if (!response.ok) throw new Error("HTTP status " + response.status);
-                
-                let data = await response.json();
-                console.log("Classmate Raw Response:", data);
+                const values = [
+                    student.id ?? "-",
+                    student.student_id ?? student.studentId ?? "-",
+                    student.name ?? student.fullName ?? student.full_name ?? "-",
+                    student.program ?? student.course ?? "-",
+                    student.year ?? student.yearLevel ?? "-",
+                    student.section ?? "-"
+                ];
 
-                // Handle wrapped responses (e.g. { data: [...] } or { students: [...] })
-                if (!Array.isArray(data)) {
-                    data = data.students || data.data || data.records || [];
-                }
-
-                classmateTableBody.replaceChildren();
-
-                if (!Array.isArray(data) || data.length === 0) {
-                    let row = document.createElement("tr");
-                    row.innerHTML = `<td colspan="6" style="text-align: center;">No records found in classmate's database.</td>`;
-                    classmateTableBody.appendChild(row);
-                    return;
-                }
-
-                data.forEach(student => {
-                    let row = document.createElement("tr");
-                    const id = student.id ?? student.student_id ?? "-";
-                    const studentId = student.student_id ?? student.studentId ?? student.id ?? "-";
-                    const name = student.name ?? student.fullName ?? student.full_name ?? "-";
-                    const program = student.program ?? student.course ?? "-";
-                    const year = student.year ?? student.yearLevel ?? "-";
-                    const section = student.section ?? "-";
-
-                    row.innerHTML = `
-                        <td>${id}</td>
-                        <td>${studentId}</td>
-                        <td>${name}</td>
-                        <td>${program}</td>
-                        <td>${year}</td>
-                        <td>${section}</td>
-                    `;
-                    classmateTableBody.appendChild(row);
+                values.forEach(value => {
+                    const td = document.createElement("td");
+                    td.textContent = value;
+                    row.appendChild(td);
                 });
-                showNotification("Successfully loaded classmate's records!", "success");
-                return; // Exit function on success
-            } catch (error) {
-                console.warn(`Attempt ${attempt} failed:`, error);
-                if (attempt < retries) {
-                    classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Server is warming up... Retrying (${attempt}/${retries})...</td></tr>`;
-                    await new Promise(res => setTimeout(res, delayMs));
-                } else {
-                    console.error("Classmate API error:", error);
-                    classmateTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #e75480;">Failed to fetch: Server is sleeping or missing CORS headers. Ensure <code>flask-cors</code> is enabled on partner server.</td></tr>`;
-                    showNotification("Failed to fetch classmate records", "error");
-                }
+
+                const actionCell = document.createElement("td");
+                const actions = document.createElement("div");
+                actions.className = "action-btns";
+
+                const viewButton = document.createElement("button");
+                viewButton.textContent = "View";
+                viewButton.onclick = () =>
+                    viewRemoteRecord(student, sourceName);
+
+                const saveButton = document.createElement("button");
+                saveButton.textContent = "Save";
+                saveButton.className = "btn-success";
+                saveButton.onclick = () =>
+                    saveRemoteRecord(student, sourceName);
+
+                actions.append(viewButton, saveButton);
+                actionCell.appendChild(actions);
+                row.appendChild(actionCell);
+
+                targetTable.appendChild(row);
+            });
+
+            showNotification(
+                `${sourceName}'s records loaded successfully!`,
+                "success"
+            );
+
+            return;
+
+        } catch (error) {
+            lastError = error;
+
+            console.warn(
+                `${sourceName} attempt ${attempt} failed:`,
+                error
+            );
+
+            if (attempt < 3) {
+                targetTable.innerHTML =
+                `<tr><td colspan="7">Server is waking up. Retrying ${attempt}/3...</td></tr>`;
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, 5000)
+                );
             }
         }
     }
 
-    form.addEventListener("submit", async function(e) {
-        e.preventDefault();
-        const internalId = document.getElementById("internalId").value;
-        const isUpdate = Boolean(internalId);
-        
-        const studentData = {
-            student_id: document.getElementById("student_id").value,
-            name: document.getElementById("name").value,
-            program: document.getElementById("program").value,
-            year: parseInt(document.getElementById("year").value),
-            section: document.getElementById("section").value
-        };
-        const url = isUpdate ? `/api/students/${internalId}` : '/api/students';
-        const method = isUpdate ? 'PUT' : 'POST';
+    targetTable.innerHTML =
+    `<tr><td colspan="7">Unable to load ${sourceName}'s records: ${lastError.message}. Check the API URL and CORS settings.</td></tr>`;
+
+    showNotification(
+        `Failed to load ${sourceName}'s records.`,
+        "error"
+    );
+}
+
+// CLASSMATE RECORDS - DISPLAY ONLY (NO VIEW OR SAVE BUTTONS)
+async function loadClassmateRecords() {
+    classmateTableBody.innerHTML =
+        `<tr><td colspan="6">Connecting to Classmate's server...</td></tr>`;
+
+    let lastError;
+
+    // Retry up to 3 times in case the deployed server is waking up.
+    for (let attempt = 1; attempt <= 3; attempt++) {
         try {
-            const response = await fetch(url, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(studentData)
-            });
-            if (!response.ok) throw new Error("Operation failed");
-            const result = await response.json();
-            
-            showNotification(result.message || (isUpdate ? "Student updated successfully!" : "Student added successfully!"), "success");
-            resetForm();
-            await loadStudents();
-            scrollToTable();
-        } catch (error) {
-            console.error("Save error:", error);
-            showNotification("Error saving student record.", "error");
-        }
-    });
+            const response = await fetch(CLASSMATE_API);
 
-    function editStudent(id, student_id, name, program, year, section) {
-        document.getElementById("internalId").value = id;
-        document.getElementById("student_id").value = student_id;
-        document.getElementById("name").value = name;
-        document.getElementById("program").value = program;
-        document.getElementById("year").value = year;
-        document.getElementById("section").value = section;
-        document.getElementById("saveBtn").innerText = "Update Student";
-        
-        showNotification(`Editing record DB ID: ${id}`, "info");
-        window.scrollTo({ top: form.offsetTop - 50, behavior: 'smooth' });
-    }
+            if (!response.ok) {
+                throw new Error("HTTP " + response.status);
+            }
 
-    async function deleteStudent(id) {
-        if (confirm("Are you sure you want to delete this student record?")) {
-            try {
-                const response = await fetch(`/api/students/${id}`, {
-                    method: 'DELETE'
+            let data = await response.json();
+
+            // Accept either a direct array or a common wrapped response.
+            if (!Array.isArray(data)) {
+                data = data.students || data.data || data.records || [];
+            }
+
+            if (!Array.isArray(data)) {
+                throw new Error("Invalid API response format");
+            }
+
+            classmateTableBody.replaceChildren();
+
+            if (data.length === 0) {
+                classmateTableBody.innerHTML =
+                    `<tr><td colspan="6">No classmate records found.</td></tr>`;
+                return;
+            }
+
+            data.forEach(student => {
+                const row = document.createElement("tr");
+
+                const values = [
+                    student.id ?? "-",
+                    student.student_id ?? student.studentId ?? "-",
+                    student.name ?? student.fullName ?? student.full_name ?? "-",
+                    student.program ?? student.course ?? "-",
+                    student.year ?? student.yearLevel ?? "-",
+                    student.section ?? "-"
+                ];
+
+                values.forEach(value => {
+                    const td = document.createElement("td");
+                    td.textContent = value;
+                    row.appendChild(td);
                 });
-                if (!response.ok) throw new Error("Delete failed");
-                const result = await response.json();
-                
-                showNotification(result.message || "Student record deleted successfully!", "success");
-                
-                await loadStudents();
-                scrollToTable();
-            } catch (error) {
-                console.error("Delete error:", error);
-                showNotification("Error deleting student record.", "error");
+
+                // Classmate records are read-only: no View or Save actions.
+                classmateTableBody.appendChild(row);
+            });
+
+            showNotification(
+                "Classmate's records loaded successfully!",
+                "success"
+            );
+
+            return;
+
+        } catch (error) {
+            lastError = error;
+
+            console.warn(
+                `Classmate attempt ${attempt} failed:`,
+                error
+            );
+
+            if (attempt < 3) {
+                classmateTableBody.innerHTML =
+                    `<tr><td colspan="6">Server is waking up. Retrying ${attempt}/3...</td></tr>`;
+
+                await new Promise(resolve => setTimeout(resolve, 5000));
             }
         }
     }
 
-    function resetForm() {
-        form.reset();
-        document.getElementById("internalId").value = "";
-        document.getElementById("saveBtn").innerText = "Add Student";
+    classmateTableBody.innerHTML =
+        `<tr><td colspan="6">Unable to load Classmate's records: ${lastError.message}. Check the API URL and CORS settings.</td></tr>`;
+
+    showNotification(
+        "Failed to load classmate records.",
+        "error"
+    );
+}
+
+// PARTNER RECORDS
+function loadPartnerRecords() {
+    return loadRemoteRecords(
+        PARTNER_API,
+        partnerTableBody,
+        "Partner"
+    );
+}
+
+// VIEW REMOTE RECORD
+function viewRemoteRecord(student, sourceName) {
+    const viewCard = document.getElementById("viewCard");
+    const viewResult = document.getElementById("viewResult");
+
+    viewCard.style.display = "block";
+
+    displayInformation(viewResult, [
+        ["Record Source", sourceName],
+        ["Student ID", student.student_id ?? student.studentId ?? student.id],
+        ["Name", student.name ?? student.fullName ?? student.full_name],
+        ["Program", student.program ?? student.course],
+        ["Year", student.year ?? student.yearLevel],
+        ["Section", student.section]
+    ]);
+
+    viewCard.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+// CLOSE VIEW
+function closeViewCard() {
+    document.getElementById("viewCard").style.display = "none";
+}
+
+// SAVE REMOTE RECORD TO MY DATABASE
+async function saveRemoteRecord(student, sourceName) {
+    const studentData = {
+        student_id: student.student_id ??
+                    student.studentId ??
+                    student.id ?? "",
+        name: student.name ??
+              student.fullName ??
+              student.full_name ?? "",
+        program: student.program ?? student.course ?? "",
+        year: student.year ?? student.yearLevel ?? null,
+        section: student.section ?? "",
+        source: sourceName
+    };
+
+    if (
+        !studentData.student_id ||
+        !studentData.name ||
+        !studentData.program ||
+        !studentData.year ||
+        !studentData.section
+    ) {
+        showNotification(
+            "Cannot import: some student information is missing.",
+            "error"
+        );
+        return;
     }
+
+    try {
+        const response = await fetch("/import-student", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(studentData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Import failed");
+        }
+
+        showNotification(
+            result.message || `${sourceName}'s record saved!`,
+            "success"
+        );
+
+        await loadStudents();
+
+    } catch (error) {
+        console.error("Import error:", error);
+
+        showNotification(
+            "Unable to save remote record: " + error.message,
+            "error"
+        );
+    }
+}
+
+// AUTOMATIC PAGE LOADING
+document.addEventListener("DOMContentLoaded", () => {
+    loadStudents();
+    loadClassmateRecords();
+    loadPartnerRecords();
+});
+
 </script>
+
 </body>
 </html>
