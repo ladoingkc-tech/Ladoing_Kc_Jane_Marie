@@ -7,7 +7,9 @@
 <title>Student API Interface</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -46,7 +48,9 @@ h2 {
     font-size: 21px;
 }
 
-p { line-height: 1.6; }
+p {
+    line-height: 1.6;
+}
 
 button {
     background: #ec6f9e;
@@ -60,13 +64,31 @@ button {
     margin: 3px;
 }
 
-button:hover { background: #d94f83; }
-button:disabled { opacity: .6; cursor: not-allowed; }
+button:hover {
+    background: #d94f83;
+}
 
-.btn-danger { background: #ff6b8b; }
-.btn-secondary { background: #b87994; }
-.btn-success { background: #2e7d32; border-color: #1b5e20; }
-.btn-pink { background: #ec6f9e; }
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background: #ff6b8b;
+}
+
+.btn-secondary {
+    background: #b87994;
+}
+
+.btn-success {
+    background: #2e7d32;
+    border-color: #1b5e20;
+}
+
+.btn-pink {
+    background: #ec6f9e;
+}
 
 input {
     width: 100%;
@@ -100,7 +122,9 @@ input:focus {
     border-bottom: 1px solid #f8d5e2;
 }
 
-.student-info p:last-child { border-bottom: none; }
+.student-info p:last-child {
+    border-bottom: none;
+}
 
 table {
     width: 100%;
@@ -116,9 +140,15 @@ th, td {
     font-size: 13px;
 }
 
-th { background: #ffe0eb; color: #5c3545; }
+th {
+    background: #ffe0eb;
+    color: #5c3545;
+}
 
-.action-btns { display: flex; gap: 5px; }
+.action-btns {
+    display: flex;
+    gap: 5px;
+}
 
 #greeting {
     color: #d63375;
@@ -153,9 +183,19 @@ th { background: #ffe0eb; color: #5c3545; }
     box-shadow: 0 4px 15px rgba(0,0,0,.15);
 }
 
-.toast.success { background: #2e7d32; }
-.toast.error { background: #d32f2f; }
-.toast.info { background: #e75480; }
+.toast.success {
+    background: #2e7d32;
+}
+
+.toast.error {
+    background: #d32f2f;
+}
+
+.toast.info {
+    background: #e75480;
+}
+
+/* INTEGRATION DASHBOARD */
 
 .dashboard-summary {
     display: grid;
@@ -223,46 +263,20 @@ th { background: #ffe0eb; color: #5c3545; }
     border: 1px solid #a5d6a7;
 }
 
-/* PARTNER SYNCHRONIZATION CONFIRMATION */
-
-.partner-notice {
-    display: none;
-    margin-top: 15px;
-    padding: 18px;
-    border-radius: 10px;
-    border: 1px solid #a5d6a7;
-    background: #e8f5e9;
-    color: #245b2a;
-}
-
-.partner-notice.success {
-    display: block;
-    background: #e8f5e9;
-    border-color: #a5d6a7;
-    color: #245b2a;
-}
-
-.partner-notice.error {
-    display: block;
-    background: #fff3e0;
-    border-color: #ffcc80;
-    color: #8a4b08;
-}
-
-.partner-notice h3 {
-    margin: 0 0 8px;
-    font-size: 17px;
-}
-
-.partner-notice p { margin: 5px 0; }
-
 @media(max-width:700px) {
-    .dashboard-summary { grid-template-columns: 1fr; }
+    .dashboard-summary {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media(max-width:600px) {
-    h1 { font-size: 22px; }
-    .card { padding: 18px; }
+    h1 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 18px;
+    }
 }
 </style>
 </head>
@@ -294,7 +308,8 @@ th { background: #ffe0eb; color: #5c3545; }
     <h2>💗 Greeting API</h2>
     <p>Enter your first name to receive a greeting!</p>
 
-    <input type="text" id="nameInput" placeholder="Enter your first name">
+    <input type="text" id="nameInput"
+           placeholder="Enter your first name">
 
     <button onclick="sayHello()">Say Hello 💕</button>
 
@@ -334,32 +349,38 @@ th { background: #ffe0eb; color: #5c3545; }
     <p>Add, edit, or delete local records in your SQLite database.</p>
 
     <form id="studentForm">
+
         <input type="hidden" id="internalId">
 
         <label><strong>Student ID:</strong></label>
-        <input type="text" id="student_id" placeholder="e.g. 24-0087" required>
+        <input type="text" id="student_id"
+               placeholder="e.g. 24-0087" required>
 
         <label><strong>Name:</strong></label>
-        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="text" id="name"
+               placeholder="Full Name" required>
 
         <label><strong>Program:</strong></label>
-        <input type="text" id="program" placeholder="e.g. BSIT" required>
+        <input type="text" id="program"
+               placeholder="e.g. BSIT" required>
 
         <label><strong>Year:</strong></label>
-        <input type="number" id="year" placeholder="e.g. 3" min="1" max="10" required>
+        <input type="number" id="year"
+               placeholder="e.g. 3" min="1" max="10" required>
 
         <label><strong>Section:</strong></label>
-        <input type="text" id="section" placeholder="e.g. B" required>
+        <input type="text" id="section"
+               placeholder="e.g. B" required>
 
         <button type="submit" id="saveBtn">Add Student</button>
 
-        <button type="button" class="btn-secondary" onclick="resetForm()">
-            Clear Form
-        </button>
+        <button type="button" class="btn-secondary"
+                onclick="resetForm()">Clear Form</button>
+
     </form>
 </div>
 
-<!-- LOCAL RECORDS DASHBOARD -->
+<!-- LOCAL RECORDS -->
 
 <div class="card">
     <h2>📂 Local Records Dashboard</h2>
@@ -381,8 +402,11 @@ th { background: #ffe0eb; color: #5c3545; }
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody id="studentTableBody">
-                <tr><td colspan="8">Loading local records...</td></tr>
+                <tr>
+                    <td colspan="8">Loading local records...</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -391,6 +415,7 @@ th { background: #ffe0eb; color: #5c3545; }
 <!-- INTEGRATION DASHBOARD -->
 
 <div class="card">
+
     <h2>📊 Integration Dashboard</h2>
 
     <p>
@@ -419,19 +444,22 @@ th { background: #ffe0eb; color: #5c3545; }
 
     <div class="dashboard-tabs">
 
-        <button type="button" class="tab-btn active"
+        <button type="button"
+                class="tab-btn active"
                 id="dashTabLocalBtn"
                 onclick="switchDashboardTab('local')">
             My Local Records
         </button>
 
-        <button type="button" class="tab-btn"
+        <button type="button"
+                class="tab-btn"
                 id="dashTabRetrievedBtn"
                 onclick="switchDashboardTab('retrieved')">
             Retrieved Records
         </button>
 
-        <button type="button" class="tab-btn"
+        <button type="button"
+                class="tab-btn"
                 id="dashTabImportedBtn"
                 onclick="switchDashboardTab('imported')">
             Imported Records
@@ -459,7 +487,9 @@ th { background: #ffe0eb; color: #5c3545; }
             </thead>
 
             <tbody id="dashLocalTableBody">
-                <tr><td colspan="7">Loading local records...</td></tr>
+                <tr>
+                    <td colspan="7">Loading local records...</td>
+                </tr>
             </tbody>
         </table>
 
@@ -485,7 +515,9 @@ th { background: #ffe0eb; color: #5c3545; }
             </thead>
 
             <tbody id="dashRetrievedTableBody">
-                <tr><td colspan="7">No retrieved records yet.</td></tr>
+                <tr>
+                    <td colspan="7">No retrieved records yet.</td>
+                </tr>
             </tbody>
         </table>
 
@@ -511,20 +543,26 @@ th { background: #ffe0eb; color: #5c3545; }
             </thead>
 
             <tbody id="dashImportedTableBody">
-                <tr><td colspan="7">No imported records yet.</td></tr>
+                <tr>
+                    <td colspan="7">No imported records yet.</td>
+                </tr>
             </tbody>
         </table>
 
     </div>
+
 </div>
 
 <!-- CLASSMATE RECORDS -->
 
 <div class="card">
+
     <h2>🌐 Classmate's Records</h2>
     <p>Records retrieved from your classmate's deployed API.</p>
 
-    <button onclick="loadClassmateRecords()">Load Classmate's Records</button>
+    <button onclick="loadClassmateRecords()">
+        Load Classmate's Records
+    </button>
 
     <div class="result">
         <table>
@@ -540,15 +578,18 @@ th { background: #ffe0eb; color: #5c3545; }
             </thead>
 
             <tbody id="classmateTableBody">
-                <tr><td colspan="6">Click the button to load records.</td></tr>
+                <tr>
+                    <td colspan="6">Click the button to load records.</td>
+                </tr>
             </tbody>
         </table>
     </div>
+
 </div>
 
 <!-- PARTNER RECORDS -->
 
-<div class="card" id="partnerRecordsCard">
+<div class="card">
 
     <h2>💞 Partner's Records</h2>
 
@@ -562,10 +603,6 @@ th { background: #ffe0eb; color: #5c3545; }
             onclick="loadPartnerRecords()">
         🔄 Refresh Partner Records
     </button>
-
-    <!-- AUTOMATIC PARTNER SAVE CONFIRMATION -->
-
-    <div id="partnerSaveNotice" class="partner-notice"></div>
 
     <div class="result">
 
@@ -591,6 +628,7 @@ th { background: #ffe0eb; color: #5c3545; }
         </table>
 
     </div>
+
 </div>
 
 <!-- PARTNER DETAILS -->
@@ -624,12 +662,7 @@ th { background: #ffe0eb; color: #5c3545; }
 const CLASSMATE_API =
 "https://distura-kate-ashley-voh6.onrender.com/students";
 
-// Your own Flask backend GET endpoint for partner records
 const PARTNER_API = "/partner-records";
-
-// Kate's Flask backend POST endpoint
-const PARTNER_POST_API_URL =
-"https://distura-kate-ashley-voh6.onrender.com/students";
 
 let retrievedPartnerRecords = [];
 let editingStudentSource = "Local";
@@ -640,9 +673,7 @@ let editingStudentSource = "Local";
 
 function showNotification(message, type = "info") {
 
-    const container =
-        document.getElementById("notificationContainer");
-
+    const container = document.getElementById("notificationContainer");
     const toast = document.createElement("div");
 
     toast.className = "toast " + type;
@@ -672,11 +703,12 @@ function displayInformation(output, fields) {
         strong.textContent = label + ": ";
 
         p.appendChild(strong);
-        p.appendChild(
-            document.createTextNode(value == null ? "" : String(value))
-        );
+        p.appendChild(document.createTextNode(
+            value == null ? "" : String(value)
+        ));
 
         info.appendChild(p);
+
     });
 
     output.appendChild(info);
@@ -695,7 +727,9 @@ async function loadStudent() {
 
         const response = await fetch("/student");
 
-        if (!response.ok) throw new Error("HTTP " + response.status);
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
         const data = await response.json();
 
@@ -711,6 +745,7 @@ async function loadStudent() {
 
         output.textContent =
             "Unable to retrieve student information: " + error.message;
+
     }
 }
 
@@ -736,15 +771,19 @@ async function sayHello() {
             "/hello?name=" + encodeURIComponent(name)
         );
 
-        if (!response.ok) throw new Error("HTTP " + response.status);
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
         const data = await response.json();
+
         output.textContent = data.message;
 
     } catch (error) {
 
         output.textContent =
             "Unable to retrieve greeting: " + error.message;
+
     }
 }
 
@@ -761,7 +800,9 @@ async function loadAPI() {
 
         const response = await fetch("/api");
 
-        if (!response.ok) throw new Error("HTTP " + response.status);
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
         output.textContent = await response.text();
 
@@ -769,6 +810,7 @@ async function loadAPI() {
 
         output.textContent =
             "Unable to retrieve API message: " + error.message;
+
     }
 }
 
@@ -785,7 +827,9 @@ async function loadCourse() {
 
         const response = await fetch("/course");
 
-        if (!response.ok) throw new Error("HTTP " + response.status);
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
         const data = await response.json();
 
@@ -801,6 +845,7 @@ async function loadCourse() {
 
         output.textContent =
             "Unable to retrieve course information: " + error.message;
+
     }
 }
 
@@ -828,6 +873,7 @@ function normalizeRecords(data) {
 function getStudentValues(student) {
 
     return {
+
         id: student.id ?? student.db_id ?? "-",
 
         student_id:
@@ -848,12 +894,14 @@ function getStudentValues(student) {
             student.year ??
             student.yearLevel ?? "",
 
-        section: student.section ?? ""
+        section:
+            student.section ?? ""
+
     };
 }
 
 // =====================================================
-// IMPORTED SOURCE MAPPING
+// IMPORTED SOURCE MAPPING - FIXED
 // =====================================================
 
 function getImportedSource(student) {
@@ -862,16 +910,19 @@ function getImportedSource(student) {
         .trim()
         .toLowerCase();
 
-    if (partnerSource === "local") return "Partner API";
+    if (partnerSource === "local") {
+        return "Partner API (Local)";
+    }
 
-    if (partnerSource === "external") return "External (Partner API)";
+    if (partnerSource.includes("classmate")) {
+        return "Classmate API";
+    }
 
-    if (partnerSource === "partner api") return "Partner API";
+    if (partnerSource.includes("external")) {
+        return "External API";
+    }
 
-    throw new Error(
-        "Unknown partner record source: " +
-        (student.source || "Not specified")
-    );
+    return "Partner API";
 }
 
 // =====================================================
@@ -890,7 +941,6 @@ function createSourceBadge(sourceText, typeClass) {
 
 // =====================================================
 // LOAD ALL DATABASE RECORDS
-// LOCAL RECORDS TABLE
 // =====================================================
 
 async function loadStudents() {
@@ -906,29 +956,33 @@ async function loadStudents() {
             cache: "no-store"
         });
 
-        if (!response.ok) throw new Error("Failed to retrieve records.");
+        if (!response.ok) {
+            throw new Error("Failed to retrieve records.");
+        }
 
         const records = normalizeRecords(await response.json());
 
         tableBody.replaceChildren();
 
         if (records.length === 0) {
+
             tableBody.innerHTML =
                 `<tr><td colspan="8">No records found.</td></tr>`;
-            return;
+
         }
 
         records.forEach(student => {
 
+            const s = getStudentValues(student);
             const row = document.createElement("tr");
 
             const values = [
-                student.id,
-                student.student_id,
-                student.name,
-                student.program,
-                student.year,
-                student.section,
+                s.id,
+                s.student_id,
+                s.name,
+                s.program,
+                s.year,
+                s.section,
                 student.source || "Local"
             ];
 
@@ -957,6 +1011,7 @@ async function loadStudents() {
             actions.append(editButton, deleteButton);
             actionCell.appendChild(actions);
             row.appendChild(actionCell);
+
             tableBody.appendChild(row);
 
         });
@@ -969,12 +1024,13 @@ async function loadStudents() {
             `<tr><td colspan="8">Unable to retrieve records.</td></tr>`;
 
         showNotification(error.message, "error");
+
     }
+
 }
 
 // =====================================================
 // ADD OR UPDATE LOCAL STUDENT
-// WITH PARTNER SYNCHRONIZATION
 // =====================================================
 
 document.getElementById("studentForm")
@@ -1004,22 +1060,15 @@ document.getElementById("studentForm")
         section:
             document.getElementById("section").value.trim(),
 
-        // New records are LOCAL records.
         source: isUpdate ? editingStudentSource : "Local"
+
     };
 
     const url = isUpdate
         ? `/api/students/${encodeURIComponent(internalId)}`
         : "/api/students";
 
-    const saveBtn = document.getElementById("saveBtn");
-
-    saveBtn.disabled = true;
-    saveBtn.textContent = isUpdate ? "Updating..." : "Saving...";
-
     try {
-
-        // STEP 1: SAVE TO YOUR OWN SQLITE DATABASE
 
         const response = await fetch(url, {
 
@@ -1036,12 +1085,11 @@ document.getElementById("studentForm")
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.error || "Local save failed.");
+            throw new Error(result.error || "Operation failed.");
         }
 
         showNotification(
-            isUpdate ? "Student updated successfully!" :
-                       "Student saved to your local database!",
+            result.message || "Student saved successfully!",
             "success"
         );
 
@@ -1050,175 +1098,14 @@ document.getElementById("studentForm")
         await loadStudents();
         await loadDashboardData();
 
-        // STEP 2: SEND NEW RECORD TO KATE'S API
-        // Do not automatically POST when editing an existing record.
-
-        if (!isUpdate) {
-
-            await synchronizeWithPartner(studentData);
-
-        }
-
     } catch (error) {
 
-        console.error("Student save error:", error);
+        console.error(error);
         showNotification(error.message, "error");
 
-    } finally {
-
-        saveBtn.disabled = false;
-
-        if (!document.getElementById("internalId").value) {
-            saveBtn.textContent = "Add Student";
-        }
     }
 
 });
-
-// =====================================================
-// SYNCHRONIZE NEW STUDENT WITH KATE'S API
-// =====================================================
-
-async function synchronizeWithPartner(studentData) {
-
-    const notice = document.getElementById("partnerSaveNotice");
-
-    notice.className = "partner-notice";
-    notice.style.display = "block";
-
-    notice.textContent =
-        "🔄 Sending " + studentData.name +
-        " to Kate's Partner Records...";
-
-    // Show the synchronization process.
-
-    document.getElementById("partnerRecordsCard")
-        .scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-    try {
-
-        const response = await fetch(PARTNER_POST_API_URL, {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                student_id: studentData.student_id,
-                name: studentData.name,
-                program: studentData.program,
-                year: studentData.year,
-                section: studentData.section,
-                source: "Partner API"
-            })
-
-        });
-
-        const result = await response.json().catch(() => ({}));
-
-        if (!response.ok) {
-
-            throw new Error(
-                result.error ||
-                result.message ||
-                "Partner API rejected the record. HTTP " + response.status
-            );
-
-        }
-
-        // SUCCESS CONFIRMATION
-
-        notice.className = "partner-notice success";
-        notice.replaceChildren();
-
-        const heading = document.createElement("h3");
-
-        heading.textContent =
-            "💗 Partner Synchronization Successful!";
-
-        const message = document.createElement("p");
-
-        message.textContent =
-            studentData.name +
-            " was successfully saved to your local database " +
-            "and Kate's Partner Records.";
-
-        const details = document.createElement("p");
-
-        details.textContent =
-            "Student ID: " + studentData.student_id +
-            " | Program: " + studentData.program +
-            " | Year: " + studentData.year +
-            " | Section: " + studentData.section;
-
-        const status = document.createElement("p");
-
-        status.textContent =
-            "✓ Partner API confirmed the record was received.";
-
-        notice.append(heading, message, details, status);
-
-        showNotification(
-            studentData.name +
-            " successfully saved to Kate's Partner Records!",
-            "success"
-        );
-
-        // Refresh the partner list after successful synchronization.
-
-        await loadPartnerRecords();
-
-        await loadDashboardData();
-
-        // Return to the confirmation area.
-
-        notice.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-    } catch (error) {
-
-        console.error("Partner synchronization error:", error);
-
-        notice.className = "partner-notice error";
-        notice.replaceChildren();
-
-        const heading = document.createElement("h3");
-
-        heading.textContent =
-            "⚠️ Partner Synchronization Failed";
-
-        const message = document.createElement("p");
-
-        message.textContent =
-            studentData.name +
-            " was saved to your local database, but could not be " +
-            "saved to Kate's Partner Records.";
-
-        const reason = document.createElement("p");
-
-        reason.textContent = "Reason: " + error.message;
-
-        const note = document.createElement("p");
-
-        note.textContent =
-            "Your local record is safe. Check Kate's API and try again.";
-
-        notice.append(heading, message, reason, note);
-
-        showNotification(
-            "Local save successful, but partner synchronization failed.",
-            "error"
-        );
-
-    }
-}
 
 // =====================================================
 // EDIT STUDENT
@@ -1237,8 +1124,9 @@ function editStudent(student) {
 
     document.getElementById("saveBtn").textContent = "Update Student";
 
-    document.getElementById("studentForm")
-        .scrollIntoView({ behavior: "smooth" });
+    document.getElementById("studentForm").scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
@@ -1278,6 +1166,7 @@ async function deleteStudent(id) {
         showNotification(error.message, "error");
 
     }
+
 }
 
 // =====================================================
@@ -1301,85 +1190,71 @@ function resetForm() {
 
 async function loadClassmateRecords() {
 
-    const tableBody =
-        document.getElementById("classmateTableBody");
+    const tableBody = document.getElementById("classmateTableBody");
 
     tableBody.innerHTML =
         `<tr><td colspan="6">Connecting to Classmate's server...</td></tr>`;
 
-    let lastError;
+    try {
 
-    for (let attempt = 1; attempt <= 3; attempt++) {
+        const response = await fetch(CLASSMATE_API);
 
-        try {
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
-            const response = await fetch(CLASSMATE_API);
+        const records = normalizeRecords(await response.json());
 
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
+        tableBody.replaceChildren();
 
-            const records =
-                normalizeRecords(await response.json());
+        if (records.length === 0) {
 
-            tableBody.replaceChildren();
-
-            if (records.length === 0) {
-
-                tableBody.innerHTML =
-                    `<tr><td colspan="6">No classmate records found.</td></tr>`;
-
-                return;
-            }
-
-            records.forEach(student => {
-
-                const s = getStudentValues(student);
-                const row = document.createElement("tr");
-
-                [
-                    s.id,
-                    s.student_id,
-                    s.name,
-                    s.program,
-                    s.year,
-                    s.section
-                ].forEach(value => {
-
-                    const td = document.createElement("td");
-                    td.textContent = value;
-                    row.appendChild(td);
-
-                });
-
-                tableBody.appendChild(row);
-
-            });
-
-            showNotification(
-                "Classmate records loaded successfully!",
-                "success"
-            );
+            tableBody.innerHTML =
+                `<tr><td colspan="6">No classmate records found.</td></tr>`;
 
             return;
 
-        } catch (error) {
-
-            lastError = error;
-
-            if (attempt < 3) {
-
-                tableBody.innerHTML =
-                    `<tr><td colspan="6">Server is waking up. Retrying...</td></tr>`;
-
-                await new Promise(resolve => setTimeout(resolve, 5000));
-
-            }
         }
-    }
 
-    tableBody.innerHTML =
-        `<tr><td colspan="6">Unable to load records: ${lastError.message}</td></tr>`;
+        records.forEach(student => {
+
+            const s = getStudentValues(student);
+            const row = document.createElement("tr");
+
+            [
+                s.id,
+                s.student_id,
+                s.name,
+                s.program,
+                s.year,
+                s.section
+            ].forEach(value => {
+
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+
+            });
+
+            tableBody.appendChild(row);
+
+        });
+
+        showNotification(
+            "Classmate records loaded successfully!",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        tableBody.innerHTML =
+            `<tr><td colspan="6">Unable to load records: ${error.message}</td></tr>`;
+
+        showNotification(error.message, "error");
+
+    }
 
 }
 
@@ -1391,15 +1266,13 @@ function viewPartnerRecord(student) {
 
     const s = getStudentValues(student);
 
-    const card =
-        document.getElementById("partnerDashboardCard");
-
-    const output =
-        document.getElementById("partnerDashboardResult");
+    const card = document.getElementById("partnerDashboardCard");
+    const output = document.getElementById("partnerDashboardResult");
 
     card.style.display = "block";
 
     displayInformation(output, [
+
         ["Record ID", s.id],
         ["Student ID", s.student_id],
         ["Name", s.name],
@@ -1407,9 +1280,12 @@ function viewPartnerRecord(student) {
         ["Year", s.year],
         ["Section", s.section],
         ["Source", student.source || "Unknown"]
+
     ]);
 
-    card.scrollIntoView({ behavior: "smooth" });
+    card.scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
@@ -1419,11 +1295,8 @@ function viewPartnerRecord(student) {
 
 async function loadPartnerRecords() {
 
-    const button =
-        document.getElementById("retrievePartnerBtn");
-
-    const tableBody =
-        document.getElementById("partnerTableBody");
+    const button = document.getElementById("retrievePartnerBtn");
+    const tableBody = document.getElementById("partnerTableBody");
 
     button.disabled = true;
     button.textContent = "Retrieving Records...";
@@ -1431,11 +1304,10 @@ async function loadPartnerRecords() {
     tableBody.innerHTML =
         `<tr><td colspan="8">Connecting to Partner API...</td></tr>`;
 
-    let lastError;
-
     try {
 
         let records;
+        let lastError;
 
         for (let attempt = 1; attempt <= 3; attempt++) {
 
@@ -1449,16 +1321,16 @@ async function loadPartnerRecords() {
                     throw new Error("HTTP " + response.status);
                 }
 
-                records =
-                    normalizeRecords(await response.json());
-
+                records = normalizeRecords(await response.json());
                 break;
 
             } catch (error) {
 
                 lastError = error;
 
-                if (attempt === 3) throw lastError;
+                if (attempt === 3) {
+                    throw lastError;
+                }
 
                 tableBody.innerHTML =
                     `<tr><td colspan="8">Server is waking up. Retrying...</td></tr>`;
@@ -1466,6 +1338,7 @@ async function loadPartnerRecords() {
                 await new Promise(resolve => setTimeout(resolve, 5000));
 
             }
+
         }
 
         retrievedPartnerRecords = records;
@@ -1479,6 +1352,7 @@ async function loadPartnerRecords() {
 
             await loadDashboardData();
             return;
+
         }
 
         records.forEach(student => {
@@ -1517,38 +1391,37 @@ async function loadPartnerRecords() {
 
             actions.className = "action-btns";
 
+            // VIEW BUTTON
+
             const viewButton = document.createElement("button");
 
             viewButton.textContent = "View";
             viewButton.className = "btn-pink";
+
             viewButton.onclick = () => viewPartnerRecord(student);
+
+            // SAVE BUTTON - FIXED
 
             const saveButton = document.createElement("button");
 
             saveButton.textContent = "Save";
             saveButton.className = "btn-success";
 
-            saveButton.onclick = () => {
+            saveButton.onclick = async () => {
 
-                try {
-
-                    saveRemoteRecord(
-                        student,
-                        getImportedSource(student),
-                        saveButton
-                    );
-
-                } catch (error) {
-
-                    showNotification(error.message, "error");
-
-                }
+                await saveRemoteRecord(
+                    student,
+                    getImportedSource(student),
+                    saveButton
+                );
 
             };
 
             actions.append(viewButton, saveButton);
+
             actionCell.appendChild(actions);
             row.appendChild(actionCell);
+
             tableBody.appendChild(row);
 
         });
@@ -1575,10 +1448,11 @@ async function loadPartnerRecords() {
         button.textContent = "🔄 Refresh Partner Records";
 
     }
+
 }
 
 // =====================================================
-// SAVE PARTNER RECORD TO YOUR SQLITE DATABASE
+// SAVE PARTNER RECORD TO SQLITE DATABASE - FIXED
 // =====================================================
 
 async function saveRemoteRecord(student, sourceName, button) {
@@ -1588,13 +1462,20 @@ async function saveRemoteRecord(student, sourceName, button) {
     const studentData = {
 
         student_id: String(s.student_id).trim(),
+
         name: String(s.name).trim(),
+
         program: String(s.program).trim(),
+
         year: parseInt(s.year, 10),
+
         section: String(s.section).trim(),
+
         source: sourceName
 
     };
+
+    // VALIDATE RECORD
 
     if (
         !studentData.student_id ||
@@ -1610,11 +1491,14 @@ async function saveRemoteRecord(student, sourceName, button) {
         );
 
         return;
+
     }
 
     if (button) {
+
         button.disabled = true;
         button.textContent = "Saving...";
+
     }
 
     try {
@@ -1631,10 +1515,20 @@ async function saveRemoteRecord(student, sourceName, button) {
 
         });
 
-        const result = await response.json();
+        let result;
+
+        try {
+            result = await response.json();
+        } catch {
+            throw new Error("Invalid response from Flask server.");
+        }
 
         if (!response.ok) {
-            throw new Error(result.error || "Failed to save partner record.");
+
+            throw new Error(
+                result.error || result.message || "Failed to save partner record."
+            );
+
         }
 
         showNotification(
@@ -1642,7 +1536,12 @@ async function saveRemoteRecord(student, sourceName, button) {
             "success"
         );
 
+        // REFRESH LOCAL RECORDS
+
         await loadStudents();
+
+        // REFRESH INTEGRATION DASHBOARD
+
         await loadDashboardData();
 
     } catch (error) {
@@ -1657,8 +1556,10 @@ async function saveRemoteRecord(student, sourceName, button) {
     } finally {
 
         if (button) {
+
             button.disabled = false;
             button.textContent = "Save";
+
         }
 
     }
@@ -1697,14 +1598,9 @@ function switchDashboardTab(tab) {
 
 async function loadDashboardData() {
 
-    const localBody =
-        document.getElementById("dashLocalTableBody");
-
-    const retrievedBody =
-        document.getElementById("dashRetrievedTableBody");
-
-    const importedBody =
-        document.getElementById("dashImportedTableBody");
+    const localBody = document.getElementById("dashLocalTableBody");
+    const retrievedBody = document.getElementById("dashRetrievedTableBody");
+    const importedBody = document.getElementById("dashImportedTableBody");
 
     try {
 
@@ -1718,17 +1614,17 @@ async function loadDashboardData() {
 
         const records = normalizeRecords(await response.json());
 
+        // SEPARATE LOCAL AND IMPORTED RECORDS
+
         const getSource = student =>
-            String(student.source || "").trim().toLowerCase();
+            String(student.source || "Local").trim().toLowerCase();
 
         const localRecords = records.filter(student =>
             getSource(student) === "local"
         );
 
         const importedRecords = records.filter(student =>
-            getSource(student) === "partner api" ||
-            getSource(student) === "external" ||
-            getSource(student) === "external (partner api)"
+            getSource(student) !== "local"
         );
 
         // UPDATE COUNTS
@@ -1755,15 +1651,16 @@ async function loadDashboardData() {
 
             localRecords.forEach(student => {
 
+                const s = getStudentValues(student);
                 const row = document.createElement("tr");
 
                 [
-                    student.id,
-                    student.student_id,
-                    student.name,
-                    student.program,
-                    student.year,
-                    student.section
+                    s.id,
+                    s.student_id,
+                    s.name,
+                    s.program,
+                    s.year,
+                    s.section
                 ].forEach(value => {
 
                     const td = document.createElement("td");
@@ -1788,7 +1685,7 @@ async function loadDashboardData() {
 
         }
 
-        // RETRIEVED RECORDS
+        // RETRIEVED PARTNER RECORDS
 
         retrievedBody.replaceChildren();
 
@@ -1823,7 +1720,7 @@ async function loadDashboardData() {
 
                 sourceCell.appendChild(
                     createSourceBadge(
-                        "Partner API",
+                        getImportedSource(student),
                         "source-imported"
                     )
                 );
@@ -1848,15 +1745,16 @@ async function loadDashboardData() {
 
             importedRecords.forEach(student => {
 
+                const s = getStudentValues(student);
                 const row = document.createElement("tr");
 
                 [
-                    student.id,
-                    student.student_id,
-                    student.name,
-                    student.program,
-                    student.year,
-                    student.section
+                    s.id,
+                    s.student_id,
+                    s.name,
+                    s.program,
+                    s.year,
+                    s.section
                 ].forEach(value => {
 
                     const td = document.createElement("td");
@@ -1905,9 +1803,13 @@ async function loadDashboardData() {
 document.addEventListener("DOMContentLoaded", async function() {
 
     await Promise.allSettled([
+
         loadStudents(),
+
         loadClassmateRecords(),
+
         loadPartnerRecords()
+
     ]);
 
     await loadDashboardData();
