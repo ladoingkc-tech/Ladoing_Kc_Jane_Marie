@@ -321,7 +321,7 @@ def add_local_student():
             str(data["program"]).strip(),
             int(data["year"]),
             str(data["section"]).strip().upper(),
-            "Local"
+            "External API"
         ))
 
         conn.commit()
