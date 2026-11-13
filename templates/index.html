@@ -7,11 +7,13 @@
 <title>Student API Interface</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff0f5;
+    background: #fff0f5;
     margin: 0;
     padding: 30px 15px;
     color: #5c3545;
@@ -25,11 +27,10 @@ body {
 h1 {
     text-align: center;
     color: white;
-    background-color: #f28bb3;
+    background: #f28bb3;
     padding: 25px 15px;
     border-radius: 15px;
     font-size: 27px;
-    box-shadow: 0 4px 10px rgba(230,100,150,.2);
 }
 
 .card {
@@ -47,10 +48,12 @@ h2 {
     font-size: 21px;
 }
 
-p { line-height: 1.6; }
+p {
+    line-height: 1.6;
+}
 
 button {
-    background-color: #ec6f9e;
+    background: #ec6f9e;
     color: white;
     border: 2px solid #222;
     padding: 9px 13px;
@@ -59,20 +62,32 @@ button {
     font-size: 13px;
     font-weight: bold;
     margin: 3px;
-    transition: .3s;
 }
 
 button:hover {
-    background-color: #d94f83;
-    transform: translateY(-2px);
+    background: #d94f83;
 }
 
-.btn-danger { background-color: #ff6b8b; }
-.btn-secondary { background-color: #b87994; }
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background: #ff6b8b;
+}
+
+.btn-secondary {
+    background: #b87994;
+}
 
 .btn-success {
-    background-color: #2e7d32;
+    background: #2e7d32;
     border-color: #1b5e20;
+}
+
+.btn-pink {
+    background: #ec6f9e;
 }
 
 input {
@@ -107,7 +122,9 @@ input:focus {
     border-bottom: 1px solid #f8d5e2;
 }
 
-.student-info p:last-child { border-bottom: none; }
+.student-info p:last-child {
+    border-bottom: none;
+}
 
 table {
     width: 100%;
@@ -164,27 +181,102 @@ th {
     font-weight: bold;
     font-size: 14px;
     box-shadow: 0 4px 15px rgba(0,0,0,.15);
-    animation: slideIn .3s ease-out;
 }
 
-.toast.success { background: #2e7d32; }
-.toast.error { background: #d32f2f; }
-.toast.info { background: #e75480; }
+.toast.success {
+    background: #2e7d32;
+}
 
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
+.toast.error {
+    background: #d32f2f;
+}
+
+.toast.info {
+    background: #e75480;
+}
+
+/* INTEGRATION DASHBOARD */
+
+.dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.stat-box {
+    background: #fff0f6;
+    border: 1px solid #f4b6cc;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stat-box h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+    color: #b87994;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e75480;
+}
+
+.dashboard-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.tab-btn {
+    background: #fffafd;
+    color: #5c3545;
+    border: 1px solid #f4b6cc;
+}
+
+.tab-btn.active {
+    background: #ec6f9e;
+    color: white;
+    border: 2px solid #222;
+}
+
+.source-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.source-local {
+    background: #ffe0eb;
+    color: #c2185b;
+    border: 1px solid #f48fb1;
+}
+
+.source-imported {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+@media(max-width:700px) {
+    .dashboard-summary {
+        grid-template-columns: 1fr;
     }
 }
 
 @media(max-width:600px) {
-    h1 { font-size: 22px; }
-    .card { padding: 18px; }
+    h1 {
+        font-size: 22px;
+    }
+
+    .card {
+        padding: 18px;
+    }
 }
 </style>
 </head>
@@ -198,51 +290,66 @@ th {
 <h1>🎀 Student API Interface 🎀</h1>
 
 <!-- STUDENT INFORMATION -->
+
 <div class="card">
     <h2>🌸 Student Information</h2>
     <p>Click the button below to view student details.</p>
+
     <button onclick="loadStudent()">Load Student Information</button>
+
     <div id="result" class="result">
         Student information will appear here.
     </div>
 </div>
 
 <!-- GREETING API -->
+
 <div class="card">
     <h2>💗 Greeting API</h2>
     <p>Enter your first name to receive a greeting!</p>
+
     <input type="text" id="nameInput"
-           placeholder="Enter your first name" maxlength="100">
+           placeholder="Enter your first name">
+
     <button onclick="sayHello()">Say Hello 💕</button>
+
     <p id="greeting"></p>
 </div>
 
 <!-- CUSTOM API -->
+
 <div class="card">
     <h2>✨ Custom API Endpoint</h2>
     <p>Retrieve the response from your /api endpoint.</p>
+
     <button onclick="loadAPI()">Load API Message</button>
+
     <div id="apiResult" class="result">
         Your API message will appear here.
     </div>
 </div>
 
-<!-- COURSE -->
+<!-- COURSE API -->
+
 <div class="card">
     <h2>📚 Course Information</h2>
     <p>Retrieve your course data from the /course endpoint.</p>
+
     <button onclick="loadCourse()">Load Course Information</button>
+
     <div id="courseResult" class="result">
         Your course information will appear here.
     </div>
 </div>
 
-<!-- MY CRUD DATABASE -->
+<!-- CRUD MANAGEMENT -->
+
 <div class="card">
     <h2>🗂️ My Student CRUD Management</h2>
-    <p>Add, edit, or delete records in your own SQLite database.</p>
+    <p>Add, edit, or delete local records in your SQLite database.</p>
 
     <form id="studentForm">
+
         <input type="hidden" id="internalId">
 
         <label><strong>Student ID:</strong></label>
@@ -259,18 +366,27 @@ th {
 
         <label><strong>Year:</strong></label>
         <input type="number" id="year"
-               placeholder="e.g. 3" min="1" required>
+               placeholder="e.g. 3" min="1" max="10" required>
 
         <label><strong>Section:</strong></label>
         <input type="text" id="section"
                placeholder="e.g. B" required>
 
         <button type="submit" id="saveBtn">Add Student</button>
+
         <button type="button" class="btn-secondary"
                 onclick="resetForm()">Clear Form</button>
-    </form>
 
-    <button onclick="loadStudents()">Refresh Student Records</button>
+    </form>
+</div>
+
+<!-- LOCAL RECORDS -->
+
+<div class="card">
+    <h2>📂 Local Records Dashboard</h2>
+    <p>View and manage all records stored in your SQLite database.</p>
+
+    <button onclick="loadStudents()">Refresh Local Records</button>
 
     <div class="result" id="tableContainer">
         <table>
@@ -286,17 +402,161 @@ th {
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody id="studentTableBody">
                 <tr>
-                    <td colspan="8">Loading records...</td>
+                    <td colspan="8">Loading local records...</td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- CLASSMATE RECORDS - DISPLAY ONLY -->
+<!-- INTEGRATION DASHBOARD -->
+
 <div class="card">
+
+    <h2>📊 Integration Dashboard</h2>
+
+    <p>
+        Overview of your local records, retrieved partner records,
+        and imported records.
+    </p>
+
+    <div class="dashboard-summary">
+
+        <div class="stat-box">
+            <h3>🏠 My Local Records</h3>
+            <div class="stat-number" id="dashLocalCount">0</div>
+        </div>
+
+        <div class="stat-box">
+            <h3>🔄 Retrieved Records</h3>
+            <div class="stat-number" id="dashRetrievedCount">0</div>
+        </div>
+
+        <div class="stat-box">
+            <h3>📥 Imported Records</h3>
+            <div class="stat-number" id="dashImportedCount">0</div>
+        </div>
+
+    </div>
+
+    <div class="dashboard-tabs">
+
+        <button type="button"
+                class="tab-btn active"
+                id="dashTabLocalBtn"
+                onclick="switchDashboardTab('local')">
+            My Local Records
+        </button>
+
+        <button type="button"
+                class="tab-btn"
+                id="dashTabRetrievedBtn"
+                onclick="switchDashboardTab('retrieved')">
+            Retrieved Records
+        </button>
+
+        <button type="button"
+                class="tab-btn"
+                id="dashTabImportedBtn"
+                onclick="switchDashboardTab('imported')">
+            Imported Records
+        </button>
+
+    </div>
+
+    <!-- LOCAL RECORDS -->
+
+    <div id="dashPanelLocal" class="result">
+
+        <strong>🏠 My Local Records (Created Directly in Local Database)</strong>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>DB ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Record Source</th>
+                </tr>
+            </thead>
+
+            <tbody id="dashLocalTableBody">
+                <tr>
+                    <td colspan="7">Loading local records...</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- RETRIEVED RECORDS -->
+
+    <div id="dashPanelRetrieved" class="result" style="display:none;">
+
+        <strong>🔄 Retrieved Records (Partner API Session Data)</strong>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Record Source</th>
+                </tr>
+            </thead>
+
+            <tbody id="dashRetrievedTableBody">
+                <tr>
+                    <td colspan="7">No retrieved records yet.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- IMPORTED RECORDS -->
+
+    <div id="dashPanelImported" class="result" style="display:none;">
+
+        <strong>📥 Imported Records (Saved Locally from Partner API)</strong>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>DB ID</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Record Source</th>
+                </tr>
+            </thead>
+
+            <tbody id="dashImportedTableBody">
+                <tr>
+                    <td colspan="7">No imported records yet.</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<!-- CLASSMATE RECORDS -->
+
+<div class="card">
+
     <h2>🌐 Classmate's Records</h2>
     <p>Records retrieved from your classmate's deployed API.</p>
 
@@ -316,25 +576,36 @@ th {
                     <th>Section</th>
                 </tr>
             </thead>
+
             <tbody id="classmateTableBody">
                 <tr>
-                    <td colspan="6">Click the button to load classmate records.</td>
+                    <td colspan="6">Click the button to load records.</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
 </div>
 
-<!-- PARTNER RECORDS - SEPARATE -->
-<div class="card">
-    <h2>💞 Partner's Records</h2>
-    <p>Records retrieved from your partner's deployed API.</p>
+<!-- PARTNER RECORDS -->
 
-    <button onclick="loadPartnerRecords()">
-        Load Partner's Records
+<div class="card">
+
+    <h2>💞 Partner's Records</h2>
+
+    <p>
+        Records retrieved from your partner's deployed API.
+        Select a record to view details or save it locally.
+    </p>
+
+    <button type="button"
+            id="retrievePartnerBtn"
+            onclick="loadPartnerRecords()">
+        🔄 Refresh Partner Records
     </button>
 
     <div class="result">
+
         <table>
             <thead>
                 <tr>
@@ -344,25 +615,36 @@ th {
                     <th>Program</th>
                     <th>Year</th>
                     <th>Section</th>
+                    <th>Source</th>
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody id="partnerTableBody">
                 <tr>
-                    <td colspan="7">Click the button to load partner records.</td>
+                    <td colspan="8">Click the button to retrieve partner records.</td>
                 </tr>
             </tbody>
         </table>
+
     </div>
+
 </div>
 
-<!-- VIEW REMOTE RECORD -->
-<div class="card" id="viewCard" style="display:none;">
-    <h2>🔍 Selected Remote Record Details</h2>
-    <div id="viewResult" class="result"></div>
-    <button class="btn-secondary" onclick="closeViewCard()">
-        Close Preview
+<!-- PARTNER DETAILS -->
+
+<div class="card" id="partnerDashboardCard" style="display:none;">
+
+    <h2>📊 Partner Records Dashboard</h2>
+    <p>Detailed view of the selected partner record.</p>
+
+    <div id="partnerDashboardResult" class="result"></div>
+
+    <button type="button" class="btn-secondary"
+            onclick="document.getElementById('partnerDashboardCard').style.display='none';">
+        Close Dashboard
     </button>
+
 </div>
 
 <div class="footer">
@@ -373,52 +655,76 @@ th {
 
 <script>
 
-// API URLS
+// =====================================================
+// API CONFIGURATION
+// =====================================================
+
 const CLASSMATE_API =
 "https://distura-kate-ashley-voh6.onrender.com/students";
 
-// Replace with your actual partner API URL if different.
-const PARTNER_API =
-"https://distura-kate-ashley-voh6.onrender.com/students";
+const PARTNER_API = "/partner-records";
 
-// ELEMENTS
-const form = document.getElementById("studentForm");
-const tableBody = document.getElementById("studentTableBody");
-const classmateTableBody =
-document.getElementById("classmateTableBody");
-const partnerTableBody =
-document.getElementById("partnerTableBody");
+let retrievedPartnerRecords = [];
+let editingStudentSource = "Local";
 
-// NOTIFICATIONS
+// =====================================================
+// NOTIFICATION
+// =====================================================
+
 function showNotification(message, type = "info") {
-    const container =
-    document.getElementById("notificationContainer");
 
+    const container = document.getElementById("notificationContainer");
     const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
+
+    toast.className = "toast " + type;
     toast.textContent = message;
 
     container.appendChild(toast);
 
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    setTimeout(() => toast.remove(), 3000);
 }
 
-function scrollToTable() {
-    document.getElementById("tableContainer")
-    .scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
+// =====================================================
+// DISPLAY INFORMATION
+// =====================================================
+
+function displayInformation(output, fields) {
+
+    output.replaceChildren();
+
+    const info = document.createElement("div");
+    info.className = "student-info";
+
+    fields.forEach(([label, value]) => {
+
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+
+        strong.textContent = label + ": ";
+
+        p.appendChild(strong);
+        p.appendChild(document.createTextNode(
+            value == null ? "" : String(value)
+        ));
+
+        info.appendChild(p);
+
     });
+
+    output.appendChild(info);
 }
 
+// =====================================================
 // STUDENT INFORMATION
+// =====================================================
+
 async function loadStudent() {
+
     const output = document.getElementById("result");
     output.textContent = "Loading student information...";
 
     try {
+
         const response = await fetch("/student");
 
         if (!response.ok) {
@@ -436,39 +742,20 @@ async function loadStudent() {
         ]);
 
     } catch (error) {
+
         output.textContent =
-        "Unable to retrieve student information: " + error.message;
+            "Unable to retrieve student information: " + error.message;
+
     }
 }
 
-// DISPLAY INFORMATION SAFELY
-function displayInformation(output, fields) {
-    output.replaceChildren();
-
-    const info = document.createElement("div");
-    info.className = "student-info";
-
-    fields.forEach(([label, value]) => {
-        const p = document.createElement("p");
-        const strong = document.createElement("strong");
-
-        strong.textContent = label + ": ";
-        p.appendChild(strong);
-        p.appendChild(
-            document.createTextNode(value == null ? "" : String(value))
-        );
-
-        info.appendChild(p);
-    });
-
-    output.appendChild(info);
-}
-
+// =====================================================
 // GREETING API
-async function sayHello() {
-    const name =
-    document.getElementById("nameInput").value.trim();
+// =====================================================
 
+async function sayHello() {
+
+    const name = document.getElementById("nameInput").value.trim();
     const output = document.getElementById("greeting");
 
     if (!name) {
@@ -479,6 +766,7 @@ async function sayHello() {
     output.textContent = "Loading greeting...";
 
     try {
+
         const response = await fetch(
             "/hello?name=" + encodeURIComponent(name)
         );
@@ -488,20 +776,28 @@ async function sayHello() {
         }
 
         const data = await response.json();
+
         output.textContent = data.message;
 
     } catch (error) {
+
         output.textContent =
-        "Unable to retrieve greeting: " + error.message;
+            "Unable to retrieve greeting: " + error.message;
+
     }
 }
 
+// =====================================================
 // CUSTOM API
+// =====================================================
+
 async function loadAPI() {
+
     const output = document.getElementById("apiResult");
     output.textContent = "Loading API message...";
 
     try {
+
         const response = await fetch("/api");
 
         if (!response.ok) {
@@ -511,17 +807,24 @@ async function loadAPI() {
         output.textContent = await response.text();
 
     } catch (error) {
+
         output.textContent =
-        "Unable to retrieve API message: " + error.message;
+            "Unable to retrieve API message: " + error.message;
+
     }
 }
 
+// =====================================================
 // COURSE API
+// =====================================================
+
 async function loadCourse() {
+
     const output = document.getElementById("courseResult");
     output.textContent = "Loading course information...";
 
     try {
+
         const response = await fetch("/course");
 
         if (!response.ok) {
@@ -539,54 +842,161 @@ async function loadCourse() {
         ]);
 
     } catch (error) {
+
         output.textContent =
-        "Unable to retrieve course information: " + error.message;
+            "Unable to retrieve course information: " + error.message;
+
     }
 }
 
-// MY SQLITE STUDENT RECORDS
+// =====================================================
+// NORMALIZE API RESPONSE
+// =====================================================
+
+function normalizeRecords(data) {
+
+    if (Array.isArray(data)) return data;
+
+    if (data && Array.isArray(data.students)) return data.students;
+
+    if (data && Array.isArray(data.data)) return data.data;
+
+    if (data && Array.isArray(data.records)) return data.records;
+
+    throw new Error("Invalid API response format.");
+}
+
+// =====================================================
+// STANDARD STUDENT VALUES
+// =====================================================
+
+function getStudentValues(student) {
+
+    return {
+
+        id: student.id ?? student.db_id ?? "-",
+
+        student_id:
+            student.student_id ??
+            student.studentId ??
+            student.id ?? "",
+
+        name:
+            student.name ??
+            student.fullName ??
+            student.full_name ?? "",
+
+        program:
+            student.program ??
+            student.course ?? "",
+
+        year:
+            student.year ??
+            student.yearLevel ?? "",
+
+        section:
+            student.section ?? ""
+
+    };
+}
+
+// =====================================================
+// IMPORTED SOURCE MAPPING - FIXED
+// =====================================================
+
+function getImportedSource(student) {
+
+    const partnerSource = String(student.source || "")
+        .trim()
+        .toLowerCase();
+
+    if (partnerSource === "local") {
+        return "Partner API (Local)";
+    }
+
+    if (partnerSource.includes("classmate")) {
+        return "Classmate API";
+    }
+
+    if (partnerSource.includes("external")) {
+        return "External API";
+    }
+
+    return "Partner API";
+}
+
+// =====================================================
+// SOURCE BADGE
+// =====================================================
+
+function createSourceBadge(sourceText, typeClass) {
+
+    const span = document.createElement("span");
+
+    span.className = "source-badge " + typeClass;
+    span.textContent = sourceText;
+
+    return span;
+}
+
+// =====================================================
+// LOAD ALL DATABASE RECORDS
+// =====================================================
+
 async function loadStudents() {
+
+    const tableBody = document.getElementById("studentTableBody");
+
     tableBody.innerHTML =
-    `<tr><td colspan="8">Loading records...</td></tr>`;
+        `<tr><td colspan="8">Loading records...</td></tr>`;
 
     try {
-        const response = await fetch("/api/students");
+
+        const response = await fetch("/api/students", {
+            cache: "no-store"
+        });
 
         if (!response.ok) {
-            throw new Error("Failed to retrieve students");
+            throw new Error("Failed to retrieve records.");
         }
 
-        const data = await response.json();
+        const records = normalizeRecords(await response.json());
 
         tableBody.replaceChildren();
 
-        if (!Array.isArray(data) || data.length === 0) {
+        if (records.length === 0) {
+
             tableBody.innerHTML =
-            `<tr><td colspan="8">No student records found.</td></tr>`;
-            return;
+                `<tr><td colspan="8">No records found.</td></tr>`;
+
         }
 
-        data.forEach(student => {
+        records.forEach(student => {
+
+            const s = getStudentValues(student);
             const row = document.createElement("tr");
 
             const values = [
-                student.id,
-                student.student_id,
-                student.name,
-                student.program,
-                student.year,
-                student.section,
+                s.id,
+                s.student_id,
+                s.name,
+                s.program,
+                s.year,
+                s.section,
                 student.source || "Local"
             ];
 
             values.forEach(value => {
+
                 const td = document.createElement("td");
                 td.textContent = value ?? "";
                 row.appendChild(td);
+
             });
 
             const actionCell = document.createElement("td");
             const actions = document.createElement("div");
+
             actions.className = "action-btns";
 
             const editButton = document.createElement("button");
@@ -603,72 +1013,108 @@ async function loadStudents() {
             row.appendChild(actionCell);
 
             tableBody.appendChild(row);
+
         });
 
     } catch (error) {
+
         console.error(error);
 
         tableBody.innerHTML =
-        `<tr><td colspan="8">Unable to retrieve student records.</td></tr>`;
+            `<tr><td colspan="8">Unable to retrieve records.</td></tr>`;
 
-        showNotification("Unable to load local records.", "error");
+        showNotification(error.message, "error");
+
     }
+
 }
 
-// ADD / UPDATE STUDENT
-form.addEventListener("submit", async function(e) {
+// =====================================================
+// ADD OR UPDATE LOCAL STUDENT
+// =====================================================
+
+document.getElementById("studentForm")
+.addEventListener("submit", async function(e) {
+
     e.preventDefault();
 
     const internalId =
-    document.getElementById("internalId").value;
+        document.getElementById("internalId").value;
 
     const isUpdate = Boolean(internalId);
 
     const studentData = {
-        student_id: document.getElementById("student_id").value.trim(),
-        name: document.getElementById("name").value.trim(),
-        program: document.getElementById("program").value.trim(),
-        year: parseInt(document.getElementById("year").value, 10),
-        section: document.getElementById("section").value.trim()
+
+        student_id:
+            document.getElementById("student_id").value.trim(),
+
+        name:
+            document.getElementById("name").value.trim(),
+
+        program:
+            document.getElementById("program").value.trim(),
+
+        year:
+            parseInt(document.getElementById("year").value, 10),
+
+        section:
+            document.getElementById("section").value.trim(),
+
+        source: isUpdate ? editingStudentSource : "Local"
+
     };
 
     const url = isUpdate
-        ? `/api/students/${internalId}`
+        ? `/api/students/${encodeURIComponent(internalId)}`
         : "/api/students";
 
     try {
+
         const response = await fetch(url, {
+
             method: isUpdate ? "PUT" : "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify(studentData)
+
         });
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.error || "Operation failed");
+            throw new Error(result.error || "Operation failed.");
         }
 
         showNotification(
-            result.message ||
-            (isUpdate ? "Student updated!" : "Student added!"),
+            result.message || "Student saved successfully!",
             "success"
         );
 
         resetForm();
+
         await loadStudents();
-        scrollToTable();
+        await loadDashboardData();
 
     } catch (error) {
+
         console.error(error);
         showNotification(error.message, "error");
+
     }
+
 });
 
+// =====================================================
 // EDIT STUDENT
+// =====================================================
+
 function editStudent(student) {
+
+    editingStudentSource = student.source || "Local";
+
     document.getElementById("internalId").value = student.id;
     document.getElementById("student_id").value = student.student_id || "";
     document.getElementById("name").value = student.name || "";
@@ -676,358 +1122,698 @@ function editStudent(student) {
     document.getElementById("year").value = student.year || "";
     document.getElementById("section").value = student.section || "";
 
-    document.getElementById("saveBtn").textContent =
-    "Update Student";
+    document.getElementById("saveBtn").textContent = "Update Student";
 
-    showNotification("Editing student record.", "info");
-
-    form.scrollIntoView({
+    document.getElementById("studentForm").scrollIntoView({
         behavior: "smooth"
     });
+
 }
 
+// =====================================================
 // DELETE STUDENT
+// =====================================================
+
 async function deleteStudent(id) {
-    if (!confirm("Are you sure you want to delete this student record?")) {
+
+    if (!confirm("Are you sure you want to delete this record?")) {
         return;
     }
 
     try {
-        const response = await fetch(`/api/students/${id}`, {
-            method: "DELETE"
-        });
+
+        const response = await fetch(
+            `/api/students/${encodeURIComponent(id)}`,
+            { method: "DELETE" }
+        );
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.error || "Delete failed");
+            throw new Error(result.error || "Delete failed.");
         }
 
         showNotification(
-            result.message || "Student deleted successfully!",
+            result.message || "Record deleted successfully!",
             "success"
         );
 
         await loadStudents();
-        scrollToTable();
+        await loadDashboardData();
 
     } catch (error) {
+
         showNotification(error.message, "error");
+
     }
+
 }
 
+// =====================================================
 // RESET FORM
-function resetForm() {
-    form.reset();
+// =====================================================
 
+function resetForm() {
+
+    editingStudentSource = "Local";
+
+    document.getElementById("studentForm").reset();
     document.getElementById("internalId").value = "";
 
-    document.getElementById("saveBtn").textContent =
-    "Add Student";
+    document.getElementById("saveBtn").textContent = "Add Student";
+
 }
 
-// SHARED REMOTE RECORD LOADER - PARTNER ONLY
-async function loadRemoteRecords(apiUrl, targetTable, sourceName) {
-    targetTable.innerHTML =
-    `<tr><td colspan="7">Connecting to ${sourceName}'s server...</td></tr>`;
+// =====================================================
+// CLASSMATE RECORDS
+// =====================================================
 
-    let lastError;
-
-    for (let attempt = 1; attempt <= 3; attempt++) {
-        try {
-            const response = await fetch(apiUrl);
-
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
-
-            let data = await response.json();
-
-            if (!Array.isArray(data)) {
-                data = data.students || data.data || data.records || [];
-            }
-
-            if (!Array.isArray(data)) {
-                throw new Error("Invalid API response format");
-            }
-
-            targetTable.replaceChildren();
-
-            if (data.length === 0) {
-                targetTable.innerHTML =
-                `<tr><td colspan="7">No ${sourceName} records found.</td></tr>`;
-                return;
-            }
-
-            data.forEach(student => {
-                const row = document.createElement("tr");
-
-                const values = [
-                    student.id ?? "-",
-                    student.student_id ?? student.studentId ?? "-",
-                    student.name ?? student.fullName ?? student.full_name ?? "-",
-                    student.program ?? student.course ?? "-",
-                    student.year ?? student.yearLevel ?? "-",
-                    student.section ?? "-"
-                ];
-
-                values.forEach(value => {
-                    const td = document.createElement("td");
-                    td.textContent = value;
-                    row.appendChild(td);
-                });
-
-                const actionCell = document.createElement("td");
-                const actions = document.createElement("div");
-                actions.className = "action-btns";
-
-                const viewButton = document.createElement("button");
-                viewButton.textContent = "View";
-                viewButton.onclick = () =>
-                    viewRemoteRecord(student, sourceName);
-
-                const saveButton = document.createElement("button");
-                saveButton.textContent = "Save";
-                saveButton.className = "btn-success";
-                saveButton.onclick = () =>
-                    saveRemoteRecord(student, sourceName);
-
-                actions.append(viewButton, saveButton);
-                actionCell.appendChild(actions);
-                row.appendChild(actionCell);
-
-                targetTable.appendChild(row);
-            });
-
-            showNotification(
-                `${sourceName}'s records loaded successfully!`,
-                "success"
-            );
-
-            return;
-
-        } catch (error) {
-            lastError = error;
-
-            console.warn(
-                `${sourceName} attempt ${attempt} failed:`,
-                error
-            );
-
-            if (attempt < 3) {
-                targetTable.innerHTML =
-                `<tr><td colspan="7">Server is waking up. Retrying ${attempt}/3...</td></tr>`;
-
-                await new Promise(resolve =>
-                    setTimeout(resolve, 5000)
-                );
-            }
-        }
-    }
-
-    targetTable.innerHTML =
-    `<tr><td colspan="7">Unable to load ${sourceName}'s records: ${lastError.message}. Check the API URL and CORS settings.</td></tr>`;
-
-    showNotification(
-        `Failed to load ${sourceName}'s records.`,
-        "error"
-    );
-}
-
-// CLASSMATE RECORDS - DISPLAY ONLY
-// No View button and no Save button.
 async function loadClassmateRecords() {
-    classmateTableBody.innerHTML =
-    `<tr><td colspan="6">Connecting to Classmate's server...</td></tr>`;
 
-    let lastError;
+    const tableBody = document.getElementById("classmateTableBody");
 
-    for (let attempt = 1; attempt <= 3; attempt++) {
-        try {
-            const response = await fetch(CLASSMATE_API);
+    tableBody.innerHTML =
+        `<tr><td colspan="6">Connecting to Classmate's server...</td></tr>`;
 
-            if (!response.ok) {
-                throw new Error("HTTP " + response.status);
-            }
+    try {
 
-            let data = await response.json();
+        const response = await fetch(CLASSMATE_API);
 
-            if (!Array.isArray(data)) {
-                data = data.students || data.data || data.records || [];
-            }
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
 
-            if (!Array.isArray(data)) {
-                throw new Error("Invalid API response format");
-            }
+        const records = normalizeRecords(await response.json());
 
-            classmateTableBody.replaceChildren();
+        tableBody.replaceChildren();
 
-            if (data.length === 0) {
-                classmateTableBody.innerHTML =
+        if (records.length === 0) {
+
+            tableBody.innerHTML =
                 `<tr><td colspan="6">No classmate records found.</td></tr>`;
-                return;
-            }
-
-            data.forEach(student => {
-                const row = document.createElement("tr");
-
-                const values = [
-                    student.id ?? "-",
-                    student.student_id ?? student.studentId ?? "-",
-                    student.name ?? student.fullName ?? student.full_name ?? "-",
-                    student.program ?? student.course ?? "-",
-                    student.year ?? student.yearLevel ?? "-",
-                    student.section ?? "-"
-                ];
-
-                values.forEach(value => {
-                    const td = document.createElement("td");
-                    td.textContent = value;
-                    row.appendChild(td);
-                });
-
-                // Display the record only.
-                // No View or Save buttons are created.
-                classmateTableBody.appendChild(row);
-            });
-
-            showNotification(
-                "Classmate's records loaded successfully!",
-                "success"
-            );
 
             return;
 
-        } catch (error) {
-            lastError = error;
-
-            console.warn(
-                `Classmate attempt ${attempt} failed:`,
-                error
-            );
-
-            if (attempt < 3) {
-                classmateTableBody.innerHTML =
-                `<tr><td colspan="6">Server is waking up. Retrying ${attempt}/3...</td></tr>`;
-
-                await new Promise(resolve =>
-                    setTimeout(resolve, 5000)
-                );
-            }
         }
+
+        records.forEach(student => {
+
+            const s = getStudentValues(student);
+            const row = document.createElement("tr");
+
+            [
+                s.id,
+                s.student_id,
+                s.name,
+                s.program,
+                s.year,
+                s.section
+            ].forEach(value => {
+
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+
+            });
+
+            tableBody.appendChild(row);
+
+        });
+
+        showNotification(
+            "Classmate records loaded successfully!",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        tableBody.innerHTML =
+            `<tr><td colspan="6">Unable to load records: ${error.message}</td></tr>`;
+
+        showNotification(error.message, "error");
+
     }
 
-    classmateTableBody.innerHTML =
-    `<tr><td colspan="6">Unable to load Classmate's records: ${lastError.message}. Check the API URL and CORS settings.</td></tr>`;
-
-    showNotification(
-        "Failed to load classmate records.",
-        "error"
-    );
 }
 
-// PARTNER RECORDS
-function loadPartnerRecords() {
-    return loadRemoteRecords(
-        PARTNER_API,
-        partnerTableBody,
-        "Partner"
-    );
-}
+// =====================================================
+// VIEW PARTNER RECORD
+// =====================================================
 
-// VIEW REMOTE RECORD
-function viewRemoteRecord(student, sourceName) {
-    const viewCard = document.getElementById("viewCard");
-    const viewResult = document.getElementById("viewResult");
+function viewPartnerRecord(student) {
 
-    viewCard.style.display = "block";
+    const s = getStudentValues(student);
 
-    displayInformation(viewResult, [
-        ["Record Source", sourceName],
-        ["Student ID", student.student_id ?? student.studentId ?? student.id],
-        ["Name", student.name ?? student.fullName ?? student.full_name],
-        ["Program", student.program ?? student.course],
-        ["Year", student.year ?? student.yearLevel],
-        ["Section", student.section]
+    const card = document.getElementById("partnerDashboardCard");
+    const output = document.getElementById("partnerDashboardResult");
+
+    card.style.display = "block";
+
+    displayInformation(output, [
+
+        ["Record ID", s.id],
+        ["Student ID", s.student_id],
+        ["Name", s.name],
+        ["Program", s.program],
+        ["Year", s.year],
+        ["Section", s.section],
+        ["Source", student.source || "Unknown"]
+
     ]);
 
-    viewCard.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
+    card.scrollIntoView({
+        behavior: "smooth"
     });
+
 }
 
-// CLOSE VIEW
-function closeViewCard() {
-    document.getElementById("viewCard").style.display = "none";
+// =====================================================
+// RETRIEVE PARTNER RECORDS
+// =====================================================
+
+async function loadPartnerRecords() {
+
+    const button = document.getElementById("retrievePartnerBtn");
+    const tableBody = document.getElementById("partnerTableBody");
+
+    button.disabled = true;
+    button.textContent = "Retrieving Records...";
+
+    tableBody.innerHTML =
+        `<tr><td colspan="8">Connecting to Partner API...</td></tr>`;
+
+    try {
+
+        let records;
+        let lastError;
+
+        for (let attempt = 1; attempt <= 3; attempt++) {
+
+            try {
+
+                const response = await fetch(PARTNER_API, {
+                    cache: "no-store"
+                });
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                records = normalizeRecords(await response.json());
+                break;
+
+            } catch (error) {
+
+                lastError = error;
+
+                if (attempt === 3) {
+                    throw lastError;
+                }
+
+                tableBody.innerHTML =
+                    `<tr><td colspan="8">Server is waking up. Retrying...</td></tr>`;
+
+                await new Promise(resolve => setTimeout(resolve, 5000));
+
+            }
+
+        }
+
+        retrievedPartnerRecords = records;
+
+        tableBody.replaceChildren();
+
+        if (records.length === 0) {
+
+            tableBody.innerHTML =
+                `<tr><td colspan="8">No partner records found.</td></tr>`;
+
+            await loadDashboardData();
+            return;
+
+        }
+
+        records.forEach(student => {
+
+            const s = getStudentValues(student);
+            const row = document.createElement("tr");
+
+            [
+                s.id,
+                s.student_id,
+                s.name,
+                s.program,
+                s.year,
+                s.section
+            ].forEach(value => {
+
+                const td = document.createElement("td");
+                td.textContent = value;
+                row.appendChild(td);
+
+            });
+
+            const sourceCell = document.createElement("td");
+
+            sourceCell.appendChild(
+                createSourceBadge(
+                    student.source || "Unknown",
+                    "source-imported"
+                )
+            );
+
+            row.appendChild(sourceCell);
+
+            const actionCell = document.createElement("td");
+            const actions = document.createElement("div");
+
+            actions.className = "action-btns";
+
+            // VIEW BUTTON
+
+            const viewButton = document.createElement("button");
+
+            viewButton.textContent = "View";
+            viewButton.className = "btn-pink";
+
+            viewButton.onclick = () => viewPartnerRecord(student);
+
+            // SAVE BUTTON - FIXED
+
+            const saveButton = document.createElement("button");
+
+            saveButton.textContent = "Save";
+            saveButton.className = "btn-success";
+
+            saveButton.onclick = async () => {
+
+                await saveRemoteRecord(
+                    student,
+                    getImportedSource(student),
+                    saveButton
+                );
+
+            };
+
+            actions.append(viewButton, saveButton);
+
+            actionCell.appendChild(actions);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+
+        });
+
+        await loadDashboardData();
+
+        showNotification(
+            "Partner records retrieved successfully!",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error("Partner API error:", error);
+
+        tableBody.innerHTML =
+            `<tr><td colspan="8">Unable to retrieve partner records: ${error.message}</td></tr>`;
+
+        showNotification(error.message, "error");
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "🔄 Refresh Partner Records";
+
+    }
+
 }
 
-// SAVE REMOTE RECORD TO MY DATABASE
-async function saveRemoteRecord(student, sourceName) {
+// =====================================================
+// SAVE PARTNER RECORD TO SQLITE DATABASE - FIXED
+// =====================================================
+
+async function saveRemoteRecord(student, sourceName, button) {
+
+    const s = getStudentValues(student);
+
     const studentData = {
-        student_id: student.student_id ??
-                    student.studentId ??
-                    student.id ?? "",
-        name: student.name ??
-              student.fullName ??
-              student.full_name ?? "",
-        program: student.program ?? student.course ?? "",
-        year: student.year ?? student.yearLevel ?? null,
-        section: student.section ?? "",
+
+        student_id: String(s.student_id).trim(),
+
+        name: String(s.name).trim(),
+
+        program: String(s.program).trim(),
+
+        year: parseInt(s.year, 10),
+
+        section: String(s.section).trim(),
+
         source: sourceName
+
     };
+
+    // VALIDATE RECORD
 
     if (
         !studentData.student_id ||
         !studentData.name ||
         !studentData.program ||
-        !studentData.year ||
+        !Number.isInteger(studentData.year) ||
         !studentData.section
     ) {
+
         showNotification(
-            "Cannot import: some student information is missing.",
+            "Cannot save: incomplete student information.",
             "error"
         );
+
         return;
+
+    }
+
+    if (button) {
+
+        button.disabled = true;
+        button.textContent = "Saving...";
+
     }
 
     try {
+
         const response = await fetch("/import-student", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify(studentData)
+
         });
 
-        const result = await response.json();
+        let result;
+
+        try {
+            result = await response.json();
+        } catch {
+            throw new Error("Invalid response from Flask server.");
+        }
 
         if (!response.ok) {
-            throw new Error(result.error || "Import failed");
+
+            throw new Error(
+                result.error || result.message || "Failed to save partner record."
+            );
+
         }
 
         showNotification(
-            result.message || `${sourceName}'s record saved!`,
+            result.message || "Partner record saved successfully!",
             "success"
         );
 
+        // REFRESH LOCAL RECORDS
+
         await loadStudents();
 
+        // REFRESH INTEGRATION DASHBOARD
+
+        await loadDashboardData();
+
     } catch (error) {
+
         console.error("Import error:", error);
 
         showNotification(
-            "Unable to save remote record: " + error.message,
+            "Unable to save record: " + error.message,
             "error"
         );
+
+    } finally {
+
+        if (button) {
+
+            button.disabled = false;
+            button.textContent = "Save";
+
+        }
+
     }
+
 }
 
-// AUTOMATIC PAGE LOADING
-document.addEventListener("DOMContentLoaded", () => {
-    loadStudents();
-    loadClassmateRecords();
-    loadPartnerRecords();
+// =====================================================
+// SWITCH DASHBOARD TABS
+// =====================================================
+
+function switchDashboardTab(tab) {
+
+    document.getElementById("dashPanelLocal").style.display =
+        tab === "local" ? "block" : "none";
+
+    document.getElementById("dashPanelRetrieved").style.display =
+        tab === "retrieved" ? "block" : "none";
+
+    document.getElementById("dashPanelImported").style.display =
+        tab === "imported" ? "block" : "none";
+
+    document.getElementById("dashTabLocalBtn")
+        .classList.toggle("active", tab === "local");
+
+    document.getElementById("dashTabRetrievedBtn")
+        .classList.toggle("active", tab === "retrieved");
+
+    document.getElementById("dashTabImportedBtn")
+        .classList.toggle("active", tab === "imported");
+
+}
+
+// =====================================================
+// INTEGRATION DASHBOARD
+// =====================================================
+
+async function loadDashboardData() {
+
+    const localBody = document.getElementById("dashLocalTableBody");
+    const retrievedBody = document.getElementById("dashRetrievedTableBody");
+    const importedBody = document.getElementById("dashImportedTableBody");
+
+    try {
+
+        const response = await fetch("/api/students", {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("Unable to retrieve database records.");
+        }
+
+        const records = normalizeRecords(await response.json());
+
+        // SEPARATE LOCAL AND IMPORTED RECORDS
+
+        const getSource = student =>
+            String(student.source || "Local").trim().toLowerCase();
+
+        const localRecords = records.filter(student =>
+            getSource(student) === "local"
+        );
+
+        const importedRecords = records.filter(student =>
+            getSource(student) !== "local"
+        );
+
+        // UPDATE COUNTS
+
+        document.getElementById("dashLocalCount").textContent =
+            localRecords.length;
+
+        document.getElementById("dashRetrievedCount").textContent =
+            retrievedPartnerRecords.length;
+
+        document.getElementById("dashImportedCount").textContent =
+            importedRecords.length;
+
+        // LOCAL RECORDS
+
+        localBody.replaceChildren();
+
+        if (localRecords.length === 0) {
+
+            localBody.innerHTML =
+                `<tr><td colspan="7">No local records found.</td></tr>`;
+
+        } else {
+
+            localRecords.forEach(student => {
+
+                const s = getStudentValues(student);
+                const row = document.createElement("tr");
+
+                [
+                    s.id,
+                    s.student_id,
+                    s.name,
+                    s.program,
+                    s.year,
+                    s.section
+                ].forEach(value => {
+
+                    const td = document.createElement("td");
+                    td.textContent = value ?? "";
+                    row.appendChild(td);
+
+                });
+
+                const sourceCell = document.createElement("td");
+
+                sourceCell.appendChild(
+                    createSourceBadge(
+                        student.source || "Local",
+                        "source-local"
+                    )
+                );
+
+                row.appendChild(sourceCell);
+                localBody.appendChild(row);
+
+            });
+
+        }
+
+        // RETRIEVED PARTNER RECORDS
+
+        retrievedBody.replaceChildren();
+
+        if (retrievedPartnerRecords.length === 0) {
+
+            retrievedBody.innerHTML =
+                `<tr><td colspan="7">No retrieved records yet.</td></tr>`;
+
+        } else {
+
+            retrievedPartnerRecords.forEach(student => {
+
+                const s = getStudentValues(student);
+                const row = document.createElement("tr");
+
+                [
+                    s.id,
+                    s.student_id,
+                    s.name,
+                    s.program,
+                    s.year,
+                    s.section
+                ].forEach(value => {
+
+                    const td = document.createElement("td");
+                    td.textContent = value ?? "";
+                    row.appendChild(td);
+
+                });
+
+                const sourceCell = document.createElement("td");
+
+                sourceCell.appendChild(
+                    createSourceBadge(
+                        getImportedSource(student),
+                        "source-imported"
+                    )
+                );
+
+                row.appendChild(sourceCell);
+                retrievedBody.appendChild(row);
+
+            });
+
+        }
+
+        // IMPORTED RECORDS
+
+        importedBody.replaceChildren();
+
+        if (importedRecords.length === 0) {
+
+            importedBody.innerHTML =
+                `<tr><td colspan="7">No imported records found.</td></tr>`;
+
+        } else {
+
+            importedRecords.forEach(student => {
+
+                const s = getStudentValues(student);
+                const row = document.createElement("tr");
+
+                [
+                    s.id,
+                    s.student_id,
+                    s.name,
+                    s.program,
+                    s.year,
+                    s.section
+                ].forEach(value => {
+
+                    const td = document.createElement("td");
+                    td.textContent = value ?? "";
+                    row.appendChild(td);
+
+                });
+
+                const sourceCell = document.createElement("td");
+
+                sourceCell.appendChild(
+                    createSourceBadge(
+                        student.source || "Unknown",
+                        "source-imported"
+                    )
+                );
+
+                row.appendChild(sourceCell);
+                importedBody.appendChild(row);
+
+            });
+
+        }
+
+        console.log("LOCAL RECORDS:", localRecords.length);
+        console.log("RETRIEVED RECORDS:", retrievedPartnerRecords.length);
+        console.log("IMPORTED RECORDS:", importedRecords.length);
+
+    } catch (error) {
+
+        console.error("Dashboard error:", error);
+
+        showNotification(
+            "Dashboard error: " + error.message,
+            "error"
+        );
+
+    }
+
+}
+
+// =====================================================
+// INITIAL PAGE LOADING
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", async function() {
+
+    await Promise.allSettled([
+
+        loadStudents(),
+
+        loadClassmateRecords(),
+
+        loadPartnerRecords()
+
+    ]);
+
+    await loadDashboardData();
+
 });
 
 </script>
